@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="wrapper wrapper-content animated fadeInUp">
+
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="sk-spinner sk-spinner-wave" ng-if="loading">
+                                <div class="sk-rect1"></div>
+                                <div class="sk-rect2"></div>
+                                <div class="sk-rect3"></div>
+                                <div class="sk-rect4"></div>
+                                <div class="sk-rect5"></div>
+                            </div>
+
+                            <form [formGroup]="forma" class="bs-example form-horizontal" ng-if="!loading" name="form" (ngSubmit)="agregarUsuario()">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">* Tipo de acceso</label>
+                                    <div class="col-md-12">
+                                        <!-- <select class="form-control" formControlName="idrol" required>
+                                    <option *ngFor = "let tipoUsuario of tiposUsuario" [value] = "tipoUsuario.idrol">{{tipoUsuario.rol}}</option>
+                                </select> -->
+                                        <select class="form-control" formControlName="idtipo_usuario" required>
+                                    <option *ngFor="let tipoUsuario of tiposUsuario" [value]="tipoUsuario.idrol">{{tipoUsuario.rol}}
+                                    </option>
+                                </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">* Nombre</label>
+                                    <div class="col-md-12">
+                                        <input formControlName="nombre" type="text" class="form-control" required>
+                                        <small class="text-danger" *ngIf="forma.get('nombre').hasError('minlength')">
+                                            <i class="fa fa-exclamation-triangle"></i>  El nombre del usuario debe de tener mínimo {{forma.get('nombre').errors.minlength.requiredLength}} caracteres.
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">* Correo</label>
+                                    <div class="col-md-12">
+                                        <!-- <input formControlName="correo" type="text" class="form-control" [class.is-invalid]="correoNoValido" required>
+                                        <small class="text-danger" *ngIf="forma.get('correo').errors?.pattern">
+                                        <i class="fa fa-exclamation-triangle"></i>    Ingresa un correo valido
+                                        </small>
+                                        <div *ngIf="correoField.hasError('notEmailAvailable')" class="invalid-feedback"> <i class="fa fa-exclamation-triangle"></i> Esta cuenta ya existe
+                                        </div> -->
+                                        <input formControlName="correo" type="text" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" [class.is-invalid]="correoNoValido" required>
+                                        <br>
+                                        <span *ngIf="correoField.hasError('correoDuplicado')">
+                                            <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Correo existente</label>
+                                        </span>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">* Contraseña</label>
+                                    <div class="col-md-12">
+                                        <!-- <input formControlName="contrasena" type="password" class="form-control">
+                                        <small class="text-danger" *ngIf="forma.get('contrasena').hasError('minlength')">
+                                                La contraseña del usuario debe de tener mínimo {{usuarioForm.get('contrasena').errors.minlength.requiredLength}} caracteres.
+                                        </small> -->
+                                        <input formControlName="password" type="password" maxlength="50" autocomplete="new-password" class="form-control">
+                                        <small class="text-danger" *ngIf="forma.get('password').hasError('minlength')">
+                                        <i class="fa fa-exclamation-triangle"></i> La contraseña debe de tener mínimo {{forma.get('password').errors.minlength.requiredLength}} caracteres.
+                                        </small>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix"></div>
+                                <div class="hr-line-dashed"></div>
+                                <div class="row">
+                                    <div class="col-6 text-left">
+                                        <button type="button" [routerLink]="['/usuarios']" class="btn btn-danger btn-raised">Cancelar</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="submit" [disabled]="!forma.valid" class="btn btn-primary btn-raised ml-1">{{textButton}}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

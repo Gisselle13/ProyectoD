@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+.tool-info-class .tooltip-inner {
+    background-color: firebrick;
+    border-radius: 8px;
+    color: white;
+    font-size: 1.0em;
+    position: absolute;
+    transition: 0.5s;
+    padding: 0.5em 1em;
+    margin-top: 0;
+    z-index: 1000;
+}

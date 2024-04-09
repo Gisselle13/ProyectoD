@@ -1,0 +1,96 @@
+<ul class="navbar-nav float-left mr-auto">
+    <li class="nav-item d-none d-md-block">
+        <a (click)="toggleSidebar.emit()" class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)">
+            <i class="ti-menu text-white"></i>
+        </a>
+    </li>
+</ul>
+<!-- ============================================================== -->
+<!-- Right side toggle and nav items -->
+<!-- ============================================================== -->
+<ul class="navbar-nav float-right">
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+    <li class="float-right mt-3 mr-2 text-white notific">
+        <!-- ============================================================== Notificacion para el usuario Coordinador de Atencion-->
+        <ng-container *ngIf="tipo == 7 && totalN>0">
+            <button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary p-0 animated tada infinite">
+                <mat-icon class="custom-icon" [matBadge]="totalN"  [matBadgeColor]="'warn'" >email</mat-icon>
+    </button>
+            <mat-menu #menu="matMenu">
+                <div class=" notification-row">
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificado(item.idoficio)" [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of OficiosPdf" mat-menu-item><i style="color: #F5BD3B" class="fa fa-bell"></i>
+                       &nbsp;&nbsp;<label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+                       &nbsp;&nbsp;<b>SOLICITUD DE OFICIO:</b>  {{item.psicologa_abogada}}
+                        </button>
+
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificado3(item.idoficio)" [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of ArrayRedaccion" mat-menu-item><i
+                                style="color: #F5BD3B" class="fa fa-bell"></i>
+                            &nbsp;&nbsp; <label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+                            &nbsp;&nbsp;<b>REDACCIÓN LISTA</b> - &nbsp;&nbsp; FOLIO: {{item.folio}}
+                        </button>
+
+                </div>
+            </mat-menu>
+        </ng-container>
+        <!-- ============================================================== Notificacion para el usuario Coordinador -->
+
+        <!-- ============================================================== Notificacion para el usuario TRABAJO SOCIAL-->
+        <ng-container *ngIf="tipo == 6 && totalN>0">
+            <button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary p-0 animated tada infinite">
+                        <mat-icon class="custom-icon" [matBadge]="totalN" [matBadgeColor]="'warn'">email</mat-icon>
+                    </button>
+            <mat-menu #menu="matMenu">
+                <div class=" notification-row">
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificaTrabajo(item.idoficio)" [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of ArrayAceptados" mat-menu-item><i
+                                    style="color: #F5BD3B" class="fa fa-bell"></i>
+                                &nbsp;&nbsp;<label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+                                &nbsp;&nbsp;<b>SOLICITUD GENERACIÓN DE FOLIO:</b> {{item.psicologa_abogada}}
+                            </button>
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificaAutorizado(item.idoficio)" [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of ArrayAutorizados" mat-menu-item><i
+            style="color: #F5BD3B" class="fa fa-bell"></i>
+        &nbsp;&nbsp;<label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+        &nbsp;&nbsp;<b>OFICIO AUTORIZADO - FOLIO:</b> {{item.folio}}
+    </button>
+                    <!-- <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificado3(item.idoficio)"
+                                [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of ArrayRedaccion" mat-menu-item><i
+                                    style="color: #F5BD3B" class="fa fa-bell"></i>
+                                &nbsp;&nbsp; <label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+                                &nbsp;&nbsp;<b>REDACCIÓN LISTA</b> - &nbsp;&nbsp; FOLIO: {{item.folio}}
+                            </button> -->
+
+                </div>
+            </mat-menu>
+        </ng-container>
+        <!-- ============================================================== Notificacion para el usuario TRABAJO SOCIAL -->
+        <!-- (tipo == 4 || tipo == 5) && -->
+        <ng-container *ngIf=" totalA>0">
+            <button mat-button [matMenuTriggerFor]="menu" class="btn btn-primary p-0 animated tada infinite"><mat-icon [matBadge]="totalA"
+                    matBadgeColor="warn">email</mat-icon></button>
+            <mat-menu #menu="matMenu">
+                <div class=" notification-row">
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificado2(item.idoficio)" [routerLink]="['/atencion/oficio', item.idoficio]" *ngFor="let item of ArrayFolios" mat-menu-item><i
+                            style="color: #F5BD3B" class="fa fa-bell"></i>&nbsp;&nbsp;<label style="font-size: x-small;">ID:{{item.idoficio}} - </label>
+                            &nbsp;&nbsp; FOLIO GENERADO:
+                        {{item.folio}}</button>
+
+
+
+                    <button style="width: 100%;height: 100%; color: #ff1ac6;" (click)="notificadoAlerta(item.idllamada)" [routerLink]="['/atencion/registro-llamadas']" *ngFor="let item of ArrayAlertas" mat-menu-item><i style="color: #F5BD3B" class="fa fa-bell"></i>&nbsp;&nbsp;<label style="font-size: x-small;">ID:{{item.idllamada}} - </label>
+                            &nbsp;&nbsp; ALERTA LLAMADA:
+                        {{item.telefono}}</button>
+                </div>
+            </mat-menu>
+        </ng-container>
+    </li>
+    <li class="float-right mt-3 mr-2 text-white">
+        Bienvenido(a) {{usuario}}
+        <a (click)="salir()" href="javascript:void(0)" class="link text-white btn btn-primary"><i class="fa fa-sign-out-alt ml-2"></i>
+            Salir </a>
+    </li>
+
+    <!-- ============================================================== -->
+    <!-- User profile and search -->
+    <!-- ============================================================== -->
+</ul>

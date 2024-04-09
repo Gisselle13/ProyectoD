@@ -1,0 +1,95 @@
+.example-button-row button,
+.example-button-row a {
+    margin-right: 8px;
+}
+
+.myBox {
+    border: 1px solid rgb(234, 238, 226);
+    padding: 5px;
+    /* font: 24px/36px sans-serif; */
+    width: auto;
+    height: 300px;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.but:hover {
+    background-color: #ac277f;
+}
+
+.but {
+    color: white;
+    background-color: #e02d9c;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+    padding: 1px;
+    /* font-size: 10px; */
+}
+
+.redondeado {
+    width: 100%;
+    padding: 5px;
+    border-radius: 20px;
+    background-color: rgb(238, 232, 232);
+    border: 0;
+    font-size: 12px;
+}
+
+button {
+    outline: 0;
+    border: 0;
+}
+
+button:focus {
+    color: rgb(255, 0, 0);
+}
+
+textarea {
+    background-attachment: local;
+    background-image: linear-gradient(to right, white 10px, transparent 10px), linear-gradient(to left, white 10px, transparent 10px), repeating-linear-gradient(white, white 30px, #ccc 30px, #ccc 31px, white 31px);
+    line-height: 31px;
+    padding: 8px 10px;
+}
+
+.myBoxCall {
+    padding: 5px;
+    width: auto;
+    height: 500px;
+    border-radius: 10px;
+}
+
+
+/* :host {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+} */
+
+.demo-section+.demo-section {
+    margin-top: 16px;
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-container2 {
+    width: 100%;
+    height: 100%;
+}
+
+.mat-radio-group-required .mat-radio-label-content::after {
+    content: '*';
+    /* Agrega un asterisco al final del label */
+    color: red;
+    /* Cambia el color del asterisco a rojo */
+    margin-left: 2px;
+    /* Añade un pequeño espacio entre el label y el asterisco */
+}

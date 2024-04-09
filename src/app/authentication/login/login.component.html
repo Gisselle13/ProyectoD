@@ -1,0 +1,155 @@
+<div class="auth-wrapper d-flex no-block justify-content-center align-items-center" *ngIf="Registro ==0">
+    <div class="auth-box m-3 m-md-0">
+        <div id="loginform">
+            <div class="logo p-1">
+                <!-- <span class="db"><img src="assets/images/inmujer-text.png" alt="logo" class="img-fluid" /></span> -->
+                <h4 class="font-medium m-b-20">Inicio de sesión</h4>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <form [formGroup]="loginForm" class="form-horizontal m-t-20" (ngSubmit)="login()">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="ti-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Correo" aria-label="Correo" aria-describedby="basic-addon1" formControlName="correo">
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon2"><i class="ti-lock"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Contraseña" aria-label="Contraseña" aria-describedby="basic-addon1" formControlName="contrasena">
+                        </div>
+                        <div class="form-group text-center">
+                            <div class="col-xs-12 p-b-20">
+                                <button [disabled]="loginForm.invalid" type="submit" class="btn btn-block btn-lg btn-info">Entrar</button>
+                            </div>
+                        </div>
+                        <!-- <div class="text-center p-2">
+                            <a class="link" (click)="registro()"> <u>Registrarse </u> </a>
+                        </div> -->
+                        <div *ngIf="error" class="alert alert-danger mt-2" role="alert">
+                            <small>{{mensajeError}}</small>
+                        </div>
+                        <p class="text-center"> Centro De Llamadas</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="auth-wrapper2 d-flex no-block justify-content-center" *ngIf="Registro ==1">
+    <div>
+        <div class="auth-box2">
+            <div class="logo">
+                <span class="db"><img src="https://nld.gob.mx/assets/img/logo.png" alt="logo" class="img-fluid" /></span>
+                <h3 class="">Registro</h3>
+            </div>
+            <hr>
+            <form [formGroup]="forma" class="bs-example form-horizontal" ng-if="!loading" name="form">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Número Empleado</mat-label>
+                            <input matInput (blur)="obtenerEmpleado(numero)" (keyup.enter)="obtenerEmpleado(numero)" maxlength="100" [(ngModel)]="numero" formControlName="numero_empleado" required />
+                        </mat-form-field>
+                        <div>
+                            <span *ngIf="numeroInvalido==1">
+                            <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Número inválido</label>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <mat-label>Nombre: </mat-label>
+                            <input class="form-control" type="text" maxlength="200" formControlName="nombre" disabled required />
+
+                        </div>
+                        <!-- <div class="col-lg-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Apellido Paterno</mat-label>
+                                <input matInput maxlength="100"  formControlName="apellido_paterno" required />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Apellido Materno</mat-label>
+                                <input matInput maxlength="100"  formControlName="apellido_materno" />
+                            </mat-form-field>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- <input formControlName="correo" type="text" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" [class.is-invalid]="correoNoValido" required> -->
+
+                            <mat-label for=""> Correo *</mat-label>
+                            <div class=" input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1"><i class="ti-email"></i></span>
+                                </div>
+                                <input maxlength="200" aria-describedby="basic-addon1" formControlName="correo" placeholder="ejemplo@correo.com" type="text" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" required />
+
+                            </div>
+                            <span *ngIf="correoField.hasError('correoDuplicado')">
+                                 <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Correo existente</label>
+                            </span>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <mat-label> Confirmar Correo *</mat-label>
+                                <div class=" input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1"><i class="ti-email"></i></span>
+                                    </div>
+                                    <input maxlength="200" (keyup)="validarIguales($event.target.value)" placeholder="ejemplo@correo.com" formControlName="correo2" type="text" maxlength="100" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" class="form-control" required />
+                                </div>
+                                <br>
+                                <span *ngIf="CorreoMatch==1">
+                                       <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Los correos no coinciden</label> 
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="form-group text-center">
+                    <div class="row">
+                        <div class="col-lg-4"></div>
+                        <div class="col-lg-4">
+                            <button [disabled]="!forma.valid||CorreoMatch==1||numeroInvalido==1" (click)="agregarRegistro()" class="btn btn-block btn-lg btn-info">Registrar</button>
+                        </div>
+                        <div class="col-lg-4"></div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </form>
+
+            <div class="text-left p-2">
+                <a class="link" (click)="cancel()"> <u>Cancelar </u> </a>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

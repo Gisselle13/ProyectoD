@@ -1,0 +1,16 @@
+#elemento-lista {
+    cursor: pointer;
+}
+
+#elemento-lista:hover {
+    background-color: rgb(232, 232, 232);
+}
+
+.activo {
+    background-color: rgb(232, 232, 232);
+}
+
+h1
+{
+    font-family: 'Alfa Slab One', cursive;
+}

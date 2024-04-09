@@ -1,0 +1,22 @@
+  .redondeado {
+      width: 100%;
+      padding: 5px;
+      border-radius: 20px;
+      background-color: rgb(238, 232, 232);
+      border: 0;
+      font-size: 12px;
+  }
+  
+  button {
+      background-color: rgb(255, 255, 255);
+      color: rgb(185, 185, 185);
+      border-radius: 50px;
+      font-size: 1rem;
+      font-style: black;
+      outline: 0;
+      border: 0;
+  }
+  
+  button:focus {
+      color: rgb(255, 0, 0);
+  }

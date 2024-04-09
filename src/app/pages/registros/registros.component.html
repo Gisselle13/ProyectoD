@@ -1,0 +1,397 @@
+<div class="card animated fadeIn p-2">
+
+    <div class="col-lg-12 text-center">
+        <!-- <h2 style="color:midnightblue;"><i class="fa fa-tty"></i> REGISTRAR LLAMADA </h2> -->
+        <h2 style="color:midnightblue;">ENCUESTA {{this.encuesta}}</h2>
+    </div>
+
+    <form [formGroup]="forma" novalidate class="card-text">
+        <br>
+        <button (click)="generarNumeroSinRepetir()" class="btn btn-xs btn-info"> <i class="fa fa-retweet"></i>  Generar</button>
+        <div class="row">
+            <div class="col-lg-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>TELÉFONO O CELULAR</mat-label>
+                    <input matInput placeholder="(867) 999 9999" mask="(000) 000 0000" formControlName="telefono" required />
+                    <mat-icon style="color: red;" *ngIf="!this.forma.value.telefono" matSuffix>
+                        error_outline</mat-icon>
+                    <!-- <mat-icon matSuffix>phone</mat-icon> -->
+                    <span *ngIf="nombreField.hasError('userDuplicado')">
+                                                    <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Telefono Duplicado</label>
+                                                </span>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-5">
+                <div class="row border p-2" style="border-radius: 10px;">
+                    <div class="col-lg-1 text-right">
+                        <mat-icon style="color: red;" *ngIf="!this.forma.value.atendio" matSuffix>
+                            error_outline</mat-icon>
+                    </div>
+                    <div class="col-lg-10">
+                        <mat-label style="color: black; font-weight: 500;"> ATENDIO LLAMADA </mat-label>
+                        <br>
+                        <mat-radio-group aria-label="Select an option" required formControlName="atendio">
+                            <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="COLGO">COLGO</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="NO MOLESTAR">NO SER MOLESTADO</mat-radio-button>&nbsp;
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>FECHA</mat-label>
+                    <input matInput type="date" formControlName="fecha" />
+                </mat-form-field>
+            </div>
+            <div class="col-lg-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>HORA DE LLAMADA</mat-label>
+                    <input matInput maxlength="1000" type="time" formControlName="hora" />
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row border p-2" style="border-radius: 10px;">
+                    <div class="col-lg-1 text-right">
+                        <mat-icon style="color: red;" *ngIf="!this.forma.value.sexo" matSuffix>
+                            error_outline</mat-icon>
+                    </div>
+                    <div class="col-lg-10">
+                        <mat-label style="color: black; font-weight: 500;"> SEXO </mat-label>
+                        <br>
+                        <mat-radio-group class="mat-radio-group-required" aria-label="Select an option" formControlName="sexo" required>
+                            <mat-radio-button color="primary" value="HOMBRE">HOMBRE</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="MUJER">MUJER</mat-radio-button>&nbsp;
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row border p-2" style="border-radius: 10px;">
+
+                    <div class="col-lg-10">
+                        <mat-label style="color: black; font-weight: 500;"> EDAD </mat-label>
+                        <br>
+                        <mat-radio-group aria-label="Select an option" formControlName="edad">
+                            <mat-radio-button color="primary" value="18 A 20">18 A 20</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="21 A 30">21 A 30</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="31 A 40">31 A 40</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="41 A 50">41 A 50</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="51 A 60">51 A 60</mat-radio-button>&nbsp;
+                            <mat-radio-button color="primary" value="61 O MÁS">61 O MÁS</mat-radio-button>&nbsp;
+
+                        </mat-radio-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!------------------------------------------------------------------------------------------------------------------------------- ENCUESTA 1 -->
+        <ng-container *ngIf="encuesta==1">
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> ¿CUENTA CON CREDENCIAL PARA VOTAR? </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" (ngModelChange)="toggle2()" formControlName="pregunta_1">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <!-- <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp; -->
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <label *ngIf="mensaje == 1" style="color: blue;">Gracias por atender la llamada</label>
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 2 </mat-label>
+                    <br>
+                    <mat-radio-group class="mat-radio-group-required" aria-label="Select an option" formControlName="pregunta_2" [required]="obligatorio">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+
+            <div class="row border p-2" style="border-radius: 10px;">
+
+                <div class="col-lg-10">
+                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 3 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_3" [required]="obligatorio">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 4 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_4" [required]="obligatorio">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 5 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_5" [required]="obligatorio">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+        </ng-container>
+
+
+        <!------------------------------------------------------------------------------------------------------------------------------- ENCUESTA 2 -->
+        <ng-container *ngIf="encuesta==2">
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> ¿CUENTA CON CREDENCIAL PARA VOTAR? ************</mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_1">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 2 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_2">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 3 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_3">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 4 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_4">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <div class="row border p-2" style="border-radius: 10px;">
+                <div class="col-lg-10">
+                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 5 </mat-label>
+                    <br>
+                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_5">
+                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
+                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
+                    </mat-radio-group>
+                </div>
+            </div>
+
+        </ng-container>
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+
+                <mat-form-field>
+                    <mat-label>COMENTARIOS</mat-label>
+                    <textarea matInput rows="3" maxlength="5000" formControlName="comentarios"></textarea>
+                    <!-- <mat-icon style="color: red;" *ngIf="!this.forma.value.comentarios" matSuffix>
+                        error_outline</mat-icon> -->
+                </mat-form-field>
+
+            </div>
+
+
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-12 text-right">
+                <button *ngIf="edit ==0" mat-raised-button color="primary" [disabled]="!forma.valid" (click)="agregarLlamada()">Agregar</button>
+                <a class="btn btn-light btn-sm" *ngIf="edit ==1" (click)="editarLlamada(this.idCall)"><i class="fa fa-save"></i>
+                        Guardar</a>
+            </div>
+
+        </div>
+    </form>
+
+    <hr>
+    <div class="p-2" *ngIf="idtipousuario!=5 && idtipousuario !=4 ">
+        <div class="text-center"><label style="color:midnightblue;">REGISTROS DE
+                LLAMADAS.- </label> ENCUESTA {{this.encuesta}}</div>
+        <div class="col mb-2 text-right">
+            Registros por página
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="limit" (ngModelChange)="paginado()">
+                <label ngbButtonLabel class="btn-secondary btn-xs"> <input ngbButton type="radio" [value]="10">
+                    10 </label>
+                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="20">
+                    20</label>
+                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="30">
+                    30</label>
+            </div>
+        </div>
+        <div class="table">
+
+            <div class="table-responsive">
+                <table datatable="ng" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead class="text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>TELÉFONO</th>
+                            <th>ATENDIO</th>
+                            <th>HORA</th>
+                            <th>FECHA</th>
+                            <th>SEXO</th>
+                            <th>EDAD</th>
+                            <th>PREGUNTA 1</th>
+                            <th>PREGUNTA 2</th>
+                            <th>PREGUNTA 3</th>
+                            <th>PREGUNTA 4</th>
+                            <th>PREGUNTA 5</th>
+                            <th>COMENTARIO</th>
+                            <!-- <th><i class="fa fa-user-circle"></i></th> -->
+                            <th> <i class="fa fa-cog"></i> </th>
+
+
+                        </tr>
+                        <tr style="background-color: white;">
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[0].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="number" placeholder="Filtrar por ID">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[1].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Filtrar por teléfono">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[2].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Atendio">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[3].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="hora">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[4].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="date" placeholder="fecha">
+                            </th>
+                            <th>
+                                <select [(ngModel)]="filtros[5].param" (ngModelChange)="filtro.next()" class="form-control">
+                                <option value="MUJER">MUJER</option>
+                                <option value="HOMBRE">HOMBRE</option>
+                                </select>
+                            </th>
+                            <th><input [(ngModel)]="filtros[6].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder=""></th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[7].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[8].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[9].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[10].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[11].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
+                            </th>
+                            <th style=" border-right: inset 0pt">
+                                <input [(ngModel)]="filtros[12].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Comentario">
+                            </th>
+
+                            <th></th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        <tr *ngFor="let r of registros">
+                            <td>{{r.idllamada}}</td>
+                            <td>{{r.telefono}}</td>
+                            <td>{{r.atendio}}</td>
+                            <td>{{r.hora}}</td>
+                            <td>{{r.fecha}}</td>
+                            <td>{{r.sexo}}</td>
+                            <td>{{r.edad}}</td>
+                            <td>{{r.pregunta_1}}</td>
+                            <td>{{r.pregunta_2}}</td>
+                            <td>{{r.pregunta_3}}</td>
+                            <td>{{r.pregunta_4}}</td>
+                            <td>{{r.pregunta_5}}</td>
+                            <td>{{r.comentarios}}</td>
+                            <!-- <td>{{r.nombre_usuario}}</td> -->
+                            <td>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <a class="btn btn-light btn-sm" ngbTooltip="Editar" (click)="obtenerLlamada(r.idllamada)"><i class="fa fa-edit"></i></a>
+                                    </div>
+                                    <div class="col-lg-6"><a class="btn btn-danger btn-sm" ngbTooltip="Eliminar" (click)="eliminarLlamada(r.idllamada)"><i
+                                            class="fa fa-trash-alt"></i></a></div>
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col left">
+                <ngb-pagination [collectionSize]="total" [maxSize]="5" [pageSize]="limit" [(page)]="page" [directionLinks]="true" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="paginado()">
+                </ngb-pagination>
+            </div>
+            <div class="col text-right ">
+                Total de registros: {{total}}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>

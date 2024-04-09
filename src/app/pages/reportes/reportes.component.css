@@ -1,0 +1,8 @@
+/* Estilo para el mat-tab-group */
+
+.mat-tab-group {
+    background-color: white;
+    /* Cambia el color de fondo del grupo de pestañas */
+    border: 1px solid #ddd;
+    /* Agrega un borde alrededor del grupo de pestañas */
+}
