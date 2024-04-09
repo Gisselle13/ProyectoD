@@ -9,7 +9,7 @@ export const RegistrosRoutes: Routes = [
         path: '',
         component: RegistrosComponent,
         data: {
-            title: 'Registro de Llamadas',
+            title: 'DATOS DEL PACIENTE',
         },
     },
 

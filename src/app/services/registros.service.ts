@@ -15,8 +15,8 @@ export class RegistrosService {
   constructor(private http: HttpClient) { }
 
 
-  agregarLlamada(form: FormData, idllamada: number, encuesta: number) {
-    const url = URL_WS + `/Registros/agregar_llamada/${idllamada}/${encuesta}`;
+  agregarPaciente(form: FormData, idllamada: number, encuesta: number) {
+    const url = URL_WS + `/Registros/agregar_paciente/${idllamada}/${encuesta}`;
     const formData: FormData = new FormData();
     let i = 1;
     formData.append('form', JSON.stringify(form));
@@ -40,13 +40,13 @@ export class RegistrosService {
   }
 
 
-  obtener_info(idllamada: number, encuesta: number) {
-    const url = URL_WS + `/Registros/obtenerinfo/${idllamada}/${encuesta}`;
+  obtener_info(idpaciente: number) {
+    const url = URL_WS + `/Registros/obtenerinfo/${idpaciente}`;
     return this.http.get(url)
       .pipe(map((resp: GetData) => {
         let proyectos: Registro = resp.registro;
         const { mensaje, status } = resp;
-        const proyecto = { status, mensaje, registro: proyectos, idllamada: idllamada }
+        const proyecto = { status, mensaje, registro: proyectos, idpaciente: idpaciente }
         return proyecto;
       }));
   }

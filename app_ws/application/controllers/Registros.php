@@ -76,10 +76,10 @@ class Registros extends REST_Controller
 
 
 
-    public function agregar_llamada_post()
+    public function agregar_paciente_post()
     {
         $post = (array) json_decode($this->post('form'));
-        $respuesta = $this->registros_model->agregarLlamada($post);
+        $respuesta = $this->registros_model->agregarPaciente($post);
         $this->response($respuesta, $respuesta['status']);
     }
 

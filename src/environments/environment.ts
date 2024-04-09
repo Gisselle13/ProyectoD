@@ -8,7 +8,7 @@ export const environment = {
 
 //export const URL_WS = 'https://callcenter.inmujer.mx/app_ws';
 export const URL_WS = 'http://localhost/ProyectoD/app_ws';
-export const APIKEY = 'c028412b5c5ee3493806e06fe9c974d5';
+export const APIKEY = '#5im76}8r<9l';
 export const TOKEN = 'proyecto';
 /*
  * In development mode, to ignore zone related error stack frames such as

@@ -2,6 +2,6 @@ export const environment = {
   production: true,
 };
 
-export const URL_WS = 'https://callcenter.inmujer.mx/app_ws';
-export const APIKEY = 'c028412b5c5ee3493806e06fe9c974d5';
+export const URL_WS = 'https://dentist.com/app_ws';
+export const APIKEY = '#5im76}8r<9l';
 export const TOKEN = 'proyecto';

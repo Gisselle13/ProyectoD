@@ -1,256 +1,209 @@
 <div class="card animated fadeIn p-2">
 
-    <div class="col-lg-12 text-center">
-        <!-- <h2 style="color:midnightblue;"><i class="fa fa-tty"></i> REGISTRAR LLAMADA </h2> -->
-        <h2 style="color:midnightblue;">ENCUESTA {{this.encuesta}}</h2>
-    </div>
-
     <form [formGroup]="forma" novalidate class="card-text">
         <br>
-        <button (click)="generarNumeroSinRepetir()" class="btn btn-xs btn-info"> <i class="fa fa-retweet"></i>  Generar</button>
-        <div class="row">
-            <div class="col-lg-3">
-                <mat-form-field appearance="outline">
-                    <mat-label>TELÉFONO O CELULAR</mat-label>
-                    <input matInput placeholder="(867) 999 9999" mask="(000) 000 0000" formControlName="telefono" required />
-                    <mat-icon style="color: red;" *ngIf="!this.forma.value.telefono" matSuffix>
-                        error_outline</mat-icon>
-                    <!-- <mat-icon matSuffix>phone</mat-icon> -->
-                    <span *ngIf="nombreField.hasError('userDuplicado')">
-                                                    <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Telefono Duplicado</label>
-                                                </span>
-                </mat-form-field>
+        <!-- <button (click)="generarNumeroSinRepetir()" class="btn btn-xs btn-info"> <i class="fa fa-retweet"></i>  Generar</button> -->
+        <div class="border-top p-1">
+            <mat-label>DATOS DEL PACIENTE</mat-label>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>NOMBRE COMPLETO:</mat-label>
+                        <input matInput maxlength="200" formControlName="nombre" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CURP</mat-label>
+                        <input matInput maxlength="200" formControlName="curp" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CÓDIGO</mat-label>
+                        <input matInput type="number" formControlName="codigo" />
+                    </mat-form-field>
+                </div>
+
+
             </div>
-            <div class="col-lg-5">
-                <div class="row border p-2" style="border-radius: 10px;">
-                    <div class="col-lg-1 text-right">
-                        <mat-icon style="color: red;" *ngIf="!this.forma.value.atendio" matSuffix>
-                            error_outline</mat-icon>
-                    </div>
-                    <div class="col-lg-10">
-                        <mat-label style="color: black; font-weight: 500;"> ATENDIO LLAMADA </mat-label>
-                        <br>
-                        <mat-radio-group aria-label="Select an option" required formControlName="atendio">
-                            <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="COLGO">COLGO</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="NO MOLESTAR">NO SER MOLESTADO</mat-radio-button>&nbsp;
-                        </mat-radio-group>
+            <div class="row">
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>EDAD</mat-label>
+                        <input matInput maxlength="200" formControlName="edad" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>MESES</mat-label>
+                        <input matInput maxlength="200" formControlName="meses" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha Ingreso</mat-label>
+                        <input matInput type="datetime-local" formControlName="fecha_ingreso" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha Nacimiento</mat-label>
+                        <input matInput type="date" formControlName="fecha_nacimiento" />
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="row border p-2" style="border-radius: 10px;">
+                        <!-- <div class="col-lg-1 text-right">
+                            <mat-icon style="color: red;" *ngIf="!this.forma.value.sexo" matSuffix>
+                                error_outline</mat-icon>
+                        </div> -->
+                        <div class="col-lg-10">
+                            <mat-label style="color: black; font-weight: 500;"> SEXO </mat-label>
+                            <br>
+                            <mat-radio-group class="mat-radio-group-required" aria-label="Select an option" formControlName="sexo">
+                                <mat-radio-button color="primary" value="M">M</mat-radio-button>&nbsp;
+                                <mat-radio-button color="primary" value="F">F</mat-radio-button>&nbsp;
+                            </mat-radio-group>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="row">
                 <mat-form-field appearance="outline">
-                    <mat-label>FECHA</mat-label>
-                    <input matInput type="date" formControlName="fecha" />
-                </mat-form-field>
-            </div>
-            <div class="col-lg-2">
-                <mat-form-field appearance="outline">
-                    <mat-label>HORA DE LLAMADA</mat-label>
-                    <input matInput maxlength="1000" type="time" formControlName="hora" />
+                    <mat-label>Medico Titular</mat-label>
+                    <mat-select [(ngModel)]="medico" formControlName="medico_titular">
+                        <mat-option *ngFor="let e of Medicos" [value]="e.value">
+                            {{e.viewValue}}
+                        </mat-option>
+                    </mat-select>
                 </mat-form-field>
             </div>
         </div>
+        <div class="border-top p-1">
+            <label> Dirección</label>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="row border p-2" style="border-radius: 10px;">
-                    <div class="col-lg-1 text-right">
-                        <mat-icon style="color: red;" *ngIf="!this.forma.value.sexo" matSuffix>
-                            error_outline</mat-icon>
-                    </div>
-                    <div class="col-lg-10">
-                        <mat-label style="color: black; font-weight: 500;"> SEXO </mat-label>
-                        <br>
-                        <mat-radio-group class="mat-radio-group-required" aria-label="Select an option" formControlName="sexo" required>
-                            <mat-radio-button color="primary" value="HOMBRE">HOMBRE</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="MUJER">MUJER</mat-radio-button>&nbsp;
-                        </mat-radio-group>
-                    </div>
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Calle</mat-label>
+                        <input matInput maxlength="200" formControlName="calle" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Colonia</mat-label>
+                        <input matInput maxlength="200" formControlName="colonia" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>N° Exterior</mat-label>
+                        <input matInput maxlength="200" formControlName="no_exterior" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>N° Interior</mat-label>
+                        <input matInput maxlength="200" formControlName="no_interior" />
+                    </mat-form-field>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="row border p-2" style="border-radius: 10px;">
 
-                    <div class="col-lg-10">
-                        <mat-label style="color: black; font-weight: 500;"> EDAD </mat-label>
-                        <br>
-                        <mat-radio-group aria-label="Select an option" formControlName="edad">
-                            <mat-radio-button color="primary" value="18 A 20">18 A 20</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="21 A 30">21 A 30</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="31 A 40">31 A 40</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="41 A 50">41 A 50</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="51 A 60">51 A 60</mat-radio-button>&nbsp;
-                            <mat-radio-button color="primary" value="61 O MÁS">61 O MÁS</mat-radio-button>&nbsp;
 
-                        </mat-radio-group>
-                    </div>
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Estado</mat-label>
+                        <input matInput maxlength="200" formControlName="estado" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>País</mat-label>
+                        <input matInput maxlength="200" formControlName="pais" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ciudad</mat-label>
+                        <input matInput maxlength="200" formControlName="ciudad" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nacionalidad</mat-label>
+                        <input matInput maxlength="200" formControlName="nacionalidad" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>C.P.</mat-label>
+                        <input matInput maxlength="200" formControlName="codigo_postal" />
+                    </mat-form-field>
                 </div>
             </div>
+
         </div>
+
+        <div class="border-top p-1">
+            <label> Contacto</label>
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tel. Casa</mat-label>
+                        <input matInput maxlength="200" formControlName="tel_casa" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tel. Oficina</mat-label>
+                        <input matInput maxlength="200" formControlName="tel_oficina" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Celular</mat-label>
+                        <input matInput maxlength="200" formControlName="celular" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Correo</mat-label>
+                        <input matInput maxlength="200" formControlName="correo" />
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+        </div>
+
+
 
         <br>
 
-        <!------------------------------------------------------------------------------------------------------------------------------- ENCUESTA 1 -->
-        <ng-container *ngIf="encuesta==1">
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> ¿CUENTA CON CREDENCIAL PARA VOTAR? </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" (ngModelChange)="toggle2()" formControlName="pregunta_1">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <!-- <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp; -->
-                    </mat-radio-group>
-                </div>
-            </div>
-
-            <label *ngIf="mensaje == 1" style="color: blue;">Gracias por atender la llamada</label>
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 2 </mat-label>
-                    <br>
-                    <mat-radio-group class="mat-radio-group-required" aria-label="Select an option" formControlName="pregunta_2" [required]="obligatorio">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-
-            <div class="row border p-2" style="border-radius: 10px;">
-
-                <div class="col-lg-10">
-                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 3 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_3" [required]="obligatorio">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 4 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_4" [required]="obligatorio">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label [ngStyle]="{'color':obligatorio=='true' ?'red':'black'}" style="color: black; font-weight: 500;"> <span *ngIf="obligatorio=='true'"><i class="fa fa-exclamation-circle"></i></span> PREGUNTA 5 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_5" [required]="obligatorio">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-        </ng-container>
-
-
-        <!------------------------------------------------------------------------------------------------------------------------------- ENCUESTA 2 -->
-        <ng-container *ngIf="encuesta==2">
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> ¿CUENTA CON CREDENCIAL PARA VOTAR? ************</mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_1">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 2 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_2">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 3 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_3">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 4 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_4">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-            <div class="row border p-2" style="border-radius: 10px;">
-                <div class="col-lg-10">
-                    <mat-label style="color: black; font-weight: 500;"> PREGUNTA 5 </mat-label>
-                    <br>
-                    <mat-radio-group aria-label="Select an option" formControlName="pregunta_5">
-                        <mat-radio-button color="primary" value="SI">SI</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO">NO</mat-radio-button>&nbsp;
-                        <mat-radio-button color="primary" value="NO LO SÉ">NO LO SÉ</mat-radio-button>&nbsp;
-                    </mat-radio-group>
-                </div>
-            </div>
-
-        </ng-container>
 
 
 
-
-
+        <!-- 
         <div class="row">
-
             <div class="col-lg-12">
-
-
                 <mat-form-field>
                     <mat-label>COMENTARIOS</mat-label>
                     <textarea matInput rows="3" maxlength="5000" formControlName="comentarios"></textarea>
-                    <!-- <mat-icon style="color: red;" *ngIf="!this.forma.value.comentarios" matSuffix>
-                        error_outline</mat-icon> -->
                 </mat-form-field>
-
             </div>
-
-
-        </div>
+        </div> -->
 
         <br>
         <div class="row">
             <div class="col-lg-12 text-right">
-                <button *ngIf="edit ==0" mat-raised-button color="primary" [disabled]="!forma.valid" (click)="agregarLlamada()">Agregar</button>
+                <button *ngIf="edit ==0" mat-raised-button color="primary" [disabled]="!forma.valid" (click)="agregarPaciente()">Agregar</button>
                 <a class="btn btn-light btn-sm" *ngIf="edit ==1" (click)="editarLlamada(this.idCall)"><i class="fa fa-save"></i>
                         Guardar</a>
             </div>
@@ -260,8 +213,7 @@
 
     <hr>
     <div class="p-2" *ngIf="idtipousuario!=5 && idtipousuario !=4 ">
-        <div class="text-center"><label style="color:midnightblue;">REGISTROS DE
-                LLAMADAS.- </label> ENCUESTA {{this.encuesta}}</div>
+        <div class="text-center"><label style="color:midnightblue;">PACIENTES REGISTRADOS </label> </div>
         <div class="col mb-2 text-right">
             Registros por página
             <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="limit" (ngModelChange)="paginado()">
@@ -280,19 +232,11 @@
                     <thead class="text-center">
                         <tr>
                             <th>ID</th>
-                            <th>TELÉFONO</th>
-                            <th>ATENDIO</th>
-                            <th>HORA</th>
-                            <th>FECHA</th>
-                            <th>SEXO</th>
+                            <th>FECHA INGRESO</th>
+                            <th>CÓDIGO</th>
+                            <th>NOMBRE</th>
+                            <th>CURP</th>
                             <th>EDAD</th>
-                            <th>PREGUNTA 1</th>
-                            <th>PREGUNTA 2</th>
-                            <th>PREGUNTA 3</th>
-                            <th>PREGUNTA 4</th>
-                            <th>PREGUNTA 5</th>
-                            <th>COMENTARIO</th>
-                            <!-- <th><i class="fa fa-user-circle"></i></th> -->
                             <th> <i class="fa fa-cog"></i> </th>
 
 
@@ -302,42 +246,26 @@
                                 <input [(ngModel)]="filtros[0].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="number" placeholder="Filtrar por ID">
                             </th>
                             <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[1].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Filtrar por teléfono">
+                                <input [(ngModel)]="filtros[1].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="date" placeholder="Fecha Ingreso">
                             </th>
                             <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[2].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Atendio">
+                                <input [(ngModel)]="filtros[2].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Código">
                             </th>
                             <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[3].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="hora">
+                                <input [(ngModel)]="filtros[3].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Nombre">
                             </th>
                             <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[4].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="date" placeholder="fecha">
+                                <input [(ngModel)]="filtros[4].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Curp">
                             </th>
+
                             <th>
-                                <select [(ngModel)]="filtros[5].param" (ngModelChange)="filtro.next()" class="form-control">
-                                <option value="MUJER">MUJER</option>
-                                <option value="HOMBRE">HOMBRE</option>
-                                </select>
+                                <input [(ngModel)]="filtros[5].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Curp">
+                                <!-- <select [(ngModel)]="filtros[5].param" (ngModelChange)="filtro.next()" class="form-control">
+                                <option value="F">F</option>
+                                <option value="M">M</option>
+                                </select> -->
                             </th>
-                            <th><input [(ngModel)]="filtros[6].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder=""></th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[7].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[8].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[9].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[10].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[11].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[12].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Comentario">
-                            </th>
+
 
                             <th></th>
 
@@ -346,26 +274,21 @@
                     </thead>
                     <tbody class="text-center">
                         <tr *ngFor="let r of registros">
-                            <td>{{r.idllamada}}</td>
-                            <td>{{r.telefono}}</td>
-                            <td>{{r.atendio}}</td>
-                            <td>{{r.hora}}</td>
-                            <td>{{r.fecha}}</td>
-                            <td>{{r.sexo}}</td>
+                            <td>{{r.idpaciente}}</td>
+                            <td>{{r.fecha_ingreso}}</td>
+                            <td>{{r.codigo}}</td>
+                            <td>{{r.nombre}}</td>
+                            <td>{{r.curp}}</td>
                             <td>{{r.edad}}</td>
-                            <td>{{r.pregunta_1}}</td>
-                            <td>{{r.pregunta_2}}</td>
-                            <td>{{r.pregunta_3}}</td>
-                            <td>{{r.pregunta_4}}</td>
-                            <td>{{r.pregunta_5}}</td>
-                            <td>{{r.comentarios}}</td>
+
+
                             <!-- <td>{{r.nombre_usuario}}</td> -->
                             <td>
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <a class="btn btn-light btn-sm" ngbTooltip="Editar" (click)="obtenerLlamada(r.idllamada)"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-light btn-sm" ngbTooltip="Editar" (click)="obtenerPaciente(r.idpaciente)"><i class="fa fa-edit"></i></a>
                                     </div>
-                                    <div class="col-lg-6"><a class="btn btn-danger btn-sm" ngbTooltip="Eliminar" (click)="eliminarLlamada(r.idllamada)"><i
+                                    <div class="col-lg-6"><a class="btn btn-danger btn-sm" ngbTooltip="Eliminar" (click)="eliminarLlamada(r.idpaciente)"><i
                                             class="fa fa-trash-alt"></i></a></div>
                                 </div>
 

@@ -2,7 +2,7 @@
 
 function conexion($bd_config){
   try {
-    $conexion = new PDO('mysql:host=localhost;charset=utf8;dbname='.$bd_config['nldgobmx_call_center'], $bd_config['root'], $bd_config['']);
+    $conexion = new PDO('mysql:host=localhost;charset=utf8;dbname='.$bd_config['proyectod'], $bd_config['root'], $bd_config['']);
     return $conexion;
   } catch (PDOException $e) {
     return false;

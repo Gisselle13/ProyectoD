@@ -17,7 +17,7 @@ import { RegistrosService } from '../../services/registros.service';
 })
 export class RegistrosComponent implements OnInit {
   forma: FormGroup;
-  idllamada = 0;
+  idpaciente = 0;
   playLoad: any;
   textButton: string = 'Agregar';
   registros: any[] = new Array();
@@ -38,6 +38,11 @@ export class RegistrosComponent implements OnInit {
   Alertas: any[] = new Array();
   idCall:any;edit=0;encuesta=0;titulo:any;Data:any;idFiltro:any;
   obligatorio = 'false'; mensaje = 0; Llamadas: any[] = new Array(); Telefonos: any[] = new Array();
+
+  Medicos = [
+    { value: 'FLORES TAMEZ DR. SIGIFREDO', viewValue: 'FLORES TAMEZ DR. SIGIFREDO' },
+    { value: 'HERNANDEZ ZARAGOZA DRA. MIRIAM', viewValue: 'HERNANDEZ ZARAGOZA DRA. MIRIAM' },
+  ]; medico: string;
   constructor(private fb: FormBuilder, private activeRoutes: ActivatedRoute, private authService: AuthService, private registrosService: RegistrosService, private usuariosService: UsuariosService, private cdr: ChangeDetectorRef) {
 
     this.playLoad = this.authService.getPlayLoad();
@@ -50,21 +55,21 @@ export class RegistrosComponent implements OnInit {
       }
     this.buildForm();
     // this.getUsuarios();
-    this.idllamada = this.activeRoutes.snapshot.params.id;
-    if (this.idllamada == undefined) {
-      this.idllamada = 0;
+    this.idpaciente = this.activeRoutes.snapshot.params.id;
+    if (this.idpaciente == undefined) {
+      this.idpaciente = 0;
       this.textButton = 'Agregar';
     }
 
-    if (this.idllamada != 0) {
+    if (this.idpaciente != 0) {
       this.textButton = 'Editar';
-      this.idllamada = this.idllamada;
+      this.idpaciente = this.idpaciente;
 
       //-- this.cargarDatos();
 
     }
     else {
-      this.idllamada = 0;
+      this.idpaciente = 0;
       this.textButton = 'Agregar';
     }
 
@@ -75,32 +80,27 @@ export class RegistrosComponent implements OnInit {
 
     this.filtros = [
       {
-        col: 'idllamada',
+        col: 'idpaciente',
         param: '',
         type: 'string',
       },
       {
-        col: 'telefono',
+        col: 'fecha_ingreso',
         param: '',
         type: 'string',
       },
       {
-        col: 'atendio',
+        col: 'codigo',
         param: '',
         type: 'string',
       },
       {
-        col: 'hora',
+        col: 'nombre',
         param: '',
         type: 'string',
       },
       {
-        col: 'fecha',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'sexo',
+        col: 'curp',
         param: '',
         type: 'string',
       },
@@ -110,47 +110,19 @@ export class RegistrosComponent implements OnInit {
         type: 'string',
       },
 
-      {
-        col: 'pregunta_1',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'pregunta_2',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'pregunta_3',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'pregunta_4',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'pregunta_5',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'comentarios',
-        param: '',
-        type: 'string',
-      },
+
+    
       //Filtrando los registros Individuales
-      {
-        col: 'idusuario',
-        param: this.idFiltro,
-        type: 'string',
-      }
+      // {
+      //   col: 'idusuario',
+      //   param: this.idFiltro,
+      //   type: 'string',
+      // }
     ];
 
     this.order = [
       {
-        orderBy: 'fecha',
+        orderBy: 'fecha_ingreso',
         direction: 'desc'
       }
     ];
@@ -158,7 +130,7 @@ export class RegistrosComponent implements OnInit {
      this.paginado();
 
 
-this.obtenerLlamadasAll();
+//this.obtenerLlamadasAll();
   }
 
   ngOnInit(): void {
@@ -180,32 +152,6 @@ this.obtenerLlamadasAll();
      console.log('Número de teléfono aleatorio:', numeroAleatorio);
   }
 
-  // Ejemplo de cómo podrías usar la función
-  // generarNumero() {
-  //   const numeroAleatorio = this.generarNumeroTelefono();
-  //   console.log('Número de teléfono aleatorio:', numeroAleatorio);
-  //   this.forma.patchValue({
-  //    'telefono': numeroAleatorio
-  //   });
-  // }
-
-  // generarNumeroTelefono(): string {
-  //   let numeroTelefono = '867'; // Prefijo telefónico (puedes cambiarlo según tu región)
-
-  //   // Generar el resto del número de teléfono (9 dígitos)
-  //   for (let i = 0; i < 7; i++) {
-  //     numeroTelefono += Math.floor(Math.random() * 10).toString();
-  //   }
-  //   const numerosEvitar = [2, 3, 4,5];
-  //   let numeroAleatorio: number;
-  //   do {
-  //     numeroAleatorio = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-  //   } while (numerosEvitar.includes(numeroAleatorio));
-  //   // Formatear el número de teléfono
-  //   numeroTelefono = numeroTelefono.replace(/(\d{3})(\d{3})(\d{4})/, '$1$2$3'); // Formato (123) 456-7890
-
-  //   return numeroTelefono;
-  // }
 
   generarNumeroTelefonoAleatorio(numerosEvitar: string[]): string {
     let numeroTelefono: string;
@@ -231,20 +177,30 @@ this.obtenerLlamadasAll();
 
   buildForm() {
     this.forma = this.fb.group({
-      idllamada: this.idllamada,
-      telefono: ['', [Validators.required], [Validations.existeTelValidator(this.registrosService)]],
-      atendio: [''],
-      pregunta_1: [''],
-      pregunta_2: [''],
-      pregunta_3: [''],
-      pregunta_4: [''],
-      pregunta_5: [''],
-      fecha: [''],
-      hora: [''],
-      comentarios: [''],
+      idpaciente: this.idpaciente,
+      fecha_ingreso: [''],
+      nombre: [''],
+      codigo: [''],
+      curp: [''],
       sexo: [''],
       edad: [''],
-      idusuario: [''],
+      meses: [''],
+   
+      fecha_nacimiento: [''],
+      medico_titular: [''],
+      calle: [''],
+      colonia: [''],
+      no_exterior: [''],
+      no_interior: [''],
+      estado: [''],
+      pais: [''],
+      ciudad: [''],
+      nacionalidad: [''],
+      codigo_postal: [''],
+      tel_casa: [''],
+      tel_oficina: [''],
+      celular: [''],
+      correo: [''],
     },
       {
         updateOn: 'change'
@@ -256,12 +212,15 @@ this.obtenerLlamadasAll();
 
 
 
-  agregarLlamada() {
+  agregarPaciente() {
 
     let text = 'Llamada Agregada'
     this.forma.value.idusuario = this.idUsuarioActual;
 
-    this.registrosService.agregarLlamada(this.forma.value, this.idllamada, this.encuesta)
+    if (this.forma.value.medico_titular==undefined){
+      this.forma.value.medico_titular = ' ';
+    }
+    this.registrosService.agregarPaciente(this.forma.value, this.idpaciente, this.encuesta)
       .subscribe(resp => {
         Swal.fire({
           title: 'Éxito',
@@ -390,14 +349,13 @@ this.obtenerLlamadasAll();
 
 
 
-  obtenerLlamada(id: number) {
+  obtenerPaciente(id: number) {
 
-    this.edit = 1;
+
     this.idCall = id;
-    this.textButton = 'Editar';
-    console.log('idCall', this.idCall);
 
-      this.registrosService.obtener_info(this.idCall, this.encuesta)
+
+      this.registrosService.obtener_info(this.idCall)
         .subscribe(
           data => {
             this.forma.patchValue(data.registro);
@@ -409,7 +367,7 @@ this.obtenerLlamadasAll();
   }
 
   editarLlamada(id: number) {
-    this.forma.value.idllamada = this.idCall;
+    this.forma.value.idpaciente = this.idCall;
     console.log('id',id);
 
 
@@ -456,9 +414,9 @@ this.obtenerLlamadasAll();
   }
  
 
-  get nombreField() {
-    return this.forma.get('telefono');
-  }
+  // get nombreField() {
+  //   return this.forma.get('telefono');
+  // }
 
 
   obtenerLlamadasAll() {
@@ -469,7 +427,7 @@ this.obtenerLlamadasAll();
 
           for (let i = 0; i <= this.Llamadas.length - 1; i++) {
             this.Telefonos[i] = this.Llamadas[i].telefono;
-           // this.Telefonos[i] = this.Llamadas[i].idllamada;
+           // this.Telefonos[i] = this.Llamadas[i].idpaciente;
           }
           console.log('Telefonos---', this.Telefonos);
         },

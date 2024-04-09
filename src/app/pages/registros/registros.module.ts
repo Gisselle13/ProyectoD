@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 
 
 import { ChartsModule } from 'ng2-charts';
+import { ListadoComponent } from './listado/listado.component';
 
 
 
@@ -17,7 +18,7 @@ import { ChartsModule } from 'ng2-charts';
         //PrimerRegistroComponent
        // ListarCargoComponent,
         
-],
+ListadoComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(RegistrosRoutes),

@@ -72,28 +72,37 @@ class Registros_model extends CI_Model
 
 
     ///------------------Registro de Llamadas
-    public function agregarLlamada($datos)
+    public function agregarPaciente($datos)
     {
-        $idllamada = $this->uri->segment(3);
+        $idpaciente = $this->uri->segment(3);
         $encuesta = $this->uri->segment(4);
         $tabla = 'registro_llamadas';
         // $idregistro = $datos['idregistro'];
 
         $data = array(
-            'telefono' => $datos['telefono'],
-            'atendio' => $datos['atendio'],
-            'fecha' => $datos['fecha'],
-            'hora' => $datos['hora'],
-            'pregunta_1' => $datos['pregunta_1'],
-            'pregunta_2' => $datos['pregunta_2'],
-            'pregunta_3' => $datos['pregunta_3'],
-            'pregunta_4' => $datos['pregunta_4'],
-            'pregunta_5' => $datos['pregunta_5'],
+            'fecha_ingreso' => $datos['fecha_ingreso'],
+            'nombre' => $datos['nombre'],
+            'curp' => $datos['curp'],
+            'codigo' => $datos['codigo'],
             'sexo' => $datos['sexo'],
             'edad' => $datos['edad'],
-            'comentarios' => $datos['comentarios'],
-            'idusuario' => $datos['idusuario'],
-            'idllamada' =>  $idllamada
+            'meses' => $datos['meses'],
+            'fecha_nacimiento' => $datos['fecha_nacimiento'],
+            'medico_titular' => $datos['medico_titular'],
+            'calle' => $datos['calle'],
+            'colonia' => $datos['colonia'],
+            'no_exterior' => $datos['no_exterior'],
+            'no_interior' => $datos['no_interior'],
+            'estado' => $datos['estado'],
+            'pais' => $datos['pais'],
+            'ciudad' => $datos['ciudad'],
+            'nacionalidad' => $datos['nacionalidad'],
+            'codigo_postal' => $datos['codigo_postal'],
+            'tel_casa' => $datos['tel_casa'],
+            'tel_oficina' => $datos['tel_oficina'],
+            'celular' => $datos['celular'],
+            'correo' => $datos['correo'],
+            'idpaciente' =>  $idpaciente
         );
 
 
@@ -104,27 +113,24 @@ class Registros_model extends CI_Model
             $tabla = 'encuesta_2';
         }
 
-        $this->db->insert($tabla, $data);
-        // $this->db->insert('registro_llamadas', $data);
-        // $idllamada = $this->db->insert_id();
+        if ($idpaciente > 0) {
+            $this->db->where('idpaciente', $idpaciente);
+            $this->db->update('$pacientes', $data);
+        }else{
+         $this->db->insert('pacientes', $data);
+        }
 
-
-
-        if (
-            $this->db->trans_status() === false
-        ) {
+        if ($this->db->trans_status() === false) {
             $this->db->trans_rollback();
             $respuesta = array(
-                'mensaje' => 'Error en inserción.',
+                'mensaje' => 'Error en Edición.',
                 'error' => $this->db->error(),
                 'status' => 409,
             );
         } else {
-
             $this->db->trans_commit();
             $respuesta = array(
-                'mensaje' => 'Inserción correcta',
-                'idllamada:' => $idllamada,
+                'mensaje' => 'Edición correcta',
                 'status' => 200,
             );
         }
@@ -137,13 +143,13 @@ class Registros_model extends CI_Model
     {
 
         $encuesta = $this->uri->segment(3);
-        $tabla='registro_llamadas';
-        if($encuesta==1){
-            $tabla = 'encuesta_1';
-        }
-        if ($encuesta == 2) {
-            $tabla = 'encuesta_2';
-        }
+        $tabla='pacientes';
+        // if($encuesta==1){
+        //     $tabla = 'encuesta_1';
+        // }
+        // if ($encuesta == 2) {
+        //     $tabla = 'encuesta_2';
+        // }
         $this->load->library('paginado');
         $paginado = $this->paginado->paginar($datos, $tabla);
 
@@ -196,13 +202,11 @@ class Registros_model extends CI_Model
     public function obtener_info($datos)
     {
 
-        $idllamada = $this->uri->segment(3);
+        $idpaciente = $this->uri->segment(3);
         $encuesta = $this->uri->segment(4);
-        $tabla = 'registro_llamadas';
-        if ($encuesta == 1) {$tabla = 'encuesta_1'; }
-        if ($encuesta == 2) {$tabla = 'encuesta_2';  }
-        $where =  array('idllamada' => $idllamada);
-        $query = $this->db->select("*")->get_where($tabla, $where);
+
+        $where =  array('idpaciente' => $idpaciente);
+        $query = $this->db->select("*")->get_where('pacientes', $where);
         if ($query && $query->num_rows() >= 1) {
             $data = $query->row();
 
@@ -210,14 +214,14 @@ class Registros_model extends CI_Model
                 'mensaje' => 'Registros cargado correctamente',
                 'datos-/', $datos,
                 $this->db->last_query(),
-                'idllamada/', $idllamada,
+                'idpaciente/', $idpaciente,
                 'registro' => $data,
                 'status' => 200,
             );
         } else {
             $respuesta = array(
                 'mensaje' => 'Error al cargar registros',
-                'idllamada/', $idllamada,
+                'idpaciente/', $idpaciente,
                 'datos-/', $datos,
                 'status' => 400,
             );
@@ -328,9 +332,9 @@ class Registros_model extends CI_Model
     public function obtenerFormato()
     {
 
-        $query = $this->db->order_by('idregistro', 'DESC') // Ordena por el campo 'id' en orden descendente
+        $query = $this->db->order_by('idpaciente', 'DESC') // Ordena por el campo 'id' en orden descendente
         ->limit(1) // Obtiene solo un registro
-            ->get('encuesta'); // Nombre de tu tabla
+            ->get('pacientes'); // Nombre de tu tabla
 
         // $idformato = $this->uri->segment(3);
         // $where =  array('idformato' => $idformato);
