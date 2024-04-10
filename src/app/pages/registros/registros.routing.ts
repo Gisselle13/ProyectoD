@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { RegistrosComponent } from './registros.component';
+import { ListadoComponent } from './listado/listado.component';
 //import { ReportesComponent } from './reportes/reportes.component';
 
 
@@ -7,9 +8,34 @@ import { RegistrosComponent } from './registros.component';
 export const RegistrosRoutes: Routes = [
     {
         path: '',
+        component: ListadoComponent,
+        data: {
+            title: 'Registros',
+        },
+    },
+
+
+    {
+        path: 'editar/:id',
         component: RegistrosComponent,
         data: {
-            title: 'DATOS DEL PACIENTE',
+            title: 'Editar Paciente',
+            urls: [
+                { title: 'Registro', url: '/editar' },
+                { title: 'Editar' }
+            ]
+        },
+    },
+
+    {
+        path: 'registros',
+        component: RegistrosComponent,
+        data: {
+            title: 'Agregar Paciente',
+            urls: [
+                { title: 'Registro', url: '/registros' },
+                { title: 'Editar' }
+            ]
         },
     },
 

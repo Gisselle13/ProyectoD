@@ -47,7 +47,7 @@ export class ReportesComponent implements OnInit {
   order = [];
   total = 0;
   page = 1;
-  limit = 10000;
+  limit = 100000;
   errMsj = null;
   fechaInicio; fechaFinal;
   documentos: any = []; reporte;
@@ -116,10 +116,40 @@ export class ReportesComponent implements OnInit {
   public barChartLegend = false;
   //public barChartPlugins = [];
   public barChartData: ChartDataSets[];
-
+  totalMujeres;
   tabDefault = 0; encuesta = 0; Data: any; FechaTermino: any; HoraTermino: any; idregistro: any; Duracion: any[] = new Array();tabSelect:any;
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private modalService: NgbModal, private registrosService: RegistrosService ) {
-    this.obtenerEncuesta();
+    this.filtro.pipe(debounceTime(800)).subscribe(() => {
+      this.paginado();
+    });
+    this.filtros = [
+      {
+        col: 'fecha_ingreso',
+        param: '',
+        type: 'fecha_inicia2',
+      },
+
+      {
+        col: 'fecha_ingreso',
+        // param: this.forma.controls['fechaInicio'].value,
+        param: this.fechaInicio,
+        type: 'fecha_inicia',
+      },
+      {
+        col: 'fecha_ingreso',
+        param: this.forma.controls['fechaFinal'].value,
+        type: 'fecha_termina',
+      },
+
+    ];
+
+    this.order = [
+      {
+        orderBy: 'fecha_ingreso',
+        direction: 'asc'
+      }
+    ];
+    this.paginado();
   }
 
   ngOnInit(): void {
@@ -131,15 +161,46 @@ export class ReportesComponent implements OnInit {
       fechaFinal: this.fechaFinal,
       //fechaInicio: this.fechaInicio
     });
-    this.obtenerDatos();
+    // this.obtenerDatos();
 
-    this.barChartLabels = ['Física ', 'Psicológica', 'Patrimonial', 'Económica', 'Sexual', 'Obstétrica', 'Digital', 'Vicaria'];
+    // this.barChartLabels = ['Física ', 'Psicológica', 'Patrimonial', 'Económica', 'Sexual', 'Obstétrica', 'Digital', 'Vicaria'];
 
 
-    this.obtenerCargo();
+    // this.obtenerCargo();
   }
 
+  paginado() {
 
+    this.reportes = [];
+    this.docs = [];
+    this.imagenes = 1;
+    this.imagenes = 0;
+    this.totalMujeres = 0;
+    this.fechaInicio = this.forma.get('fechaInicio').value;
+    this.fechaFinal = this.forma.get('fechaFinal').value;
+    this.filtros[1].param = this.fechaInicio;
+    this.filtros[2].param = this.fechaFinal;
+    // console.log('fechaInicio:', this.fechaInicio); 
+    // console.log('fechaFinal:', this.fechaFinal); 
+    this.registrosService.paginadoReportes(this.limit, this.page, this.filtros, this.order)
+      .subscribe(
+        (data) => {
+          // console.log('data - cap-', data);
+          this.limit = 5000;
+          let t = 0;
+          //  this.reportes = data.respuesta.registros;
+          this.reportes = data.registros;
+          for (let r in this.reportes) {
+            this.totalMujeres = this.totalMujeres + parseInt(this.reportes[r].no_mujeres);
+          }
+
+
+
+        }
+
+      );
+
+  }
 
   obtenerDatos() {
 

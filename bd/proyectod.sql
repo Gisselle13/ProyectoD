@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2024 a las 21:51:20
+-- Tiempo de generación: 10-04-2024 a las 22:07:38
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 5.6.24
 
@@ -4461,7 +4461,7 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`idmenu`, `path`, `title`, `icon`, `class`, `submenu`, `activo`) VALUES
 (0, 'inicio', 'Inicio', 'mdi mdi-home', '', 0, 1),
-(1, 'registros', 'Registros', 'mdi mdi-user', '', 0, 1),
+(1, 'registros', 'Registros', 'mdi mdi-account-card-details', '', 0, 1),
 (7, 'reportes', 'Reportes', 'mdi mdi-file', '', 0, 1),
 (10, 'configuracion', 'Configuración', 'fa fa-cog', 'has-arrow', 1, 1);
 
@@ -4494,17 +4494,30 @@ CREATE TABLE `pacientes` (
   `tel_casa` varchar(100) NOT NULL,
   `tel_oficina` varchar(100) NOT NULL,
   `celular` varchar(100) NOT NULL,
-  `correo` varchar(500) NOT NULL
+  `correo` varchar(500) NOT NULL,
+  `alergico_medicamento` varchar(100) NOT NULL,
+  `realizado_endodoncias` varchar(100) NOT NULL,
+  `diabetico` varchar(100) NOT NULL,
+  `padece_corazon` varchar(100) NOT NULL,
+  `padece_presion_baja` varchar(100) NOT NULL,
+  `padece_presion_alta` varchar(100) NOT NULL,
+  `padece_riñon` varchar(100) NOT NULL,
+  `otra_enfermedad` varchar(200) NOT NULL,
+  `tomando_medicamento` varchar(200) NOT NULL,
+  `sangran_encias` varchar(100) NOT NULL,
+  `dolor_piezas` varchar(100) NOT NULL,
+  `color` varchar(100) NOT NULL,
+  `notas` varchar(9000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `pacientes`
 --
 
-INSERT INTO `pacientes` (`idpaciente`, `fecha_ingreso`, `nombre`, `codigo`, `curp`, `sexo`, `edad`, `meses`, `fecha_nacimiento`, `medico_titular`, `calle`, `colonia`, `no_exterior`, `no_interior`, `estado`, `pais`, `ciudad`, `nacionalidad`, `codigo_postal`, `tel_casa`, `tel_oficina`, `celular`, `correo`) VALUES
-(1, '0000-00-00 00:00:00', '11111111111', 123, 'fffffffffff', 'M', 0, '', '0000-00-00', ' ', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(2, '0000-00-00 00:00:00', '11111111111', 0, 'fffffffffff', 'F', 0, '', '0000-00-00', ' ', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(3, '2024-04-09 00:00:00', 'paciente 1', 33, 'ggggggggg', 'M', 11, '2', '1966-03-31', 'FLORES TAMEZ DR. SIGIFREDO', 'f', 'ffffff', '333', '33', 'gggggg', 'ggggg', 'gggg', 'eeee', 'cccc', '3333', '33', '333', 'ggg@co.com');
+INSERT INTO `pacientes` (`idpaciente`, `fecha_ingreso`, `nombre`, `codigo`, `curp`, `sexo`, `edad`, `meses`, `fecha_nacimiento`, `medico_titular`, `calle`, `colonia`, `no_exterior`, `no_interior`, `estado`, `pais`, `ciudad`, `nacionalidad`, `codigo_postal`, `tel_casa`, `tel_oficina`, `celular`, `correo`, `alergico_medicamento`, `realizado_endodoncias`, `diabetico`, `padece_corazon`, `padece_presion_baja`, `padece_presion_alta`, `padece_riñon`, `otra_enfermedad`, `tomando_medicamento`, `sangran_encias`, `dolor_piezas`, `color`, `notas`) VALUES
+(1, '2024-04-10 13:30:00', 'paciente 1', 123, '222', 'M', 44, '1', '2000-03-31', ' ', 'fffff calle', '44', '44', '44', '', '44', '44', '444', '2222', '444', '4444', '44', '444', 'ggg', 'dd', 'diabetico', 'corazon', 'baja', 'alta', 'eeee', 'otra enf', 'medicamento', 'ee', '', 'red', 'fffffffffffffffffffff note'),
+(3, '2024-04-09 00:00:00', 'paciente 1', 33, 'ggggggggg', 'M', 11, '2', '1966-03-31', 'FLORES TAMEZ DR. SIGIFREDO', 'f', 'ffffff', '333', '33', 'gggggg', 'ggggg', 'gggg', 'eeee', 'cccc', '3333', '33', '333', 'ggg@co.com', '', '', '', '', '', '', '', '', '', '', '', '', ''),
+(4, '2024-04-07 13:41:00', 'paciente add', 777, '7887777', 'F', 0, '', '0000-00-00', 'HERNANDEZ ZARAGOZA DRA. MIRIAM', '8555', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -4751,7 +4764,7 @@ ALTER TABLE `base_pacientes`
 -- AUTO_INCREMENT de la tabla `pacientes`
 --
 ALTER TABLE `pacientes`
-  MODIFY `idpaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idpaciente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --

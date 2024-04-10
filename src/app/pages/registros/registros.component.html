@@ -4,7 +4,10 @@
         <br>
         <!-- <button (click)="generarNumeroSinRepetir()" class="btn btn-xs btn-info"> <i class="fa fa-retweet"></i>  Generar</button> -->
         <div class="border-top p-1">
-            <mat-label>DATOS DEL PACIENTE</mat-label>
+            <div class="col-lg-12 text-center"><b style="color: rgb(0, 204, 255);">DATOS DEL PACIENTE</b></div>
+            <br>
+
+
             <div class="row">
 
                 <div class="col-lg-6">
@@ -187,128 +190,135 @@
 
         <br>
 
+        <hr>
+
+        <div class="border p-2" style="background-color: aliceblue; border-radius: 10px;">
+            <div class="col-lg-12 text-center"><label style="color: rgb(0, 204, 255);"> HISTORIA CLÍNICA</label></div>
+
+            <br>
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿ES ALERGICO A ALGUN MEDICAMENTO?</mat-label>
+                        <input matInput maxlength="100" formControlName="alergico_medicamento" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿LE HAN REALIZADO ENDODONCIAS?</mat-label>
+                        <input matInput maxlength="100" formControlName="realizado_endodoncias" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿ES DIABETICO?</mat-label>
+                        <input matInput maxlength="100" formControlName="diabetico" />
+                    </mat-form-field>
+                </div>
 
 
-
-        <!-- 
-        <div class="row">
-            <div class="col-lg-12">
-                <mat-form-field>
-                    <mat-label>COMENTARIOS</mat-label>
-                    <textarea matInput rows="3" maxlength="5000" formControlName="comentarios"></textarea>
-                </mat-form-field>
             </div>
-        </div> -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿PADECE DEL CORAZON?</mat-label>
+                        <input matInput maxlength="100" formControlName="padece_corazon" />
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿PADECE PRESION BAJA?</mat-label>
+                        <input matInput maxlength="100" formControlName="padece_presion_baja" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿PADECE PRESION ALTA?</mat-label>
+                        <input matInput maxlength="100" formControlName="padece_presion_alta" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿PADECE DEL RIÑON?</mat-label>
+                        <input matInput maxlength="100" formControlName="padece_riñon" />
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿OTRA ENFERMEDAD?</mat-label>
+                        <input matInput maxlength="100" formControlName="otra_enfermedad" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿ESTA TOMANDO ALGUN MEDICAMENTO?</mat-label>
+                        <input matInput maxlength="100" formControlName="tomando_medicamento" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿SANGRAN SUS ENCIAS AL CEPILLADO?</mat-label>
+                        <input matInput maxlength="100" formControlName="sangran_encias" />
+                    </mat-form-field>
+                </div>
+
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>¿TIENE DOLOR DE ALGUNA DE SUS PIEZAS?</mat-label>
+                        <input matInput maxlength="100" formControlName="dolor_piezas" />
+                    </mat-form-field>
+                </div>
+                <div class="col-lg-4">
+                    <mat-form-field appearance="outline">
+                        <mat-label>COLOR:</mat-label>
+                        <input matInput maxlength="100" formControlName="color" />
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <mat-form-field>
+                        <mat-label>NOTAS</mat-label>
+                        <textarea matInput rows="6" maxlength="9000" formControlName="notas"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+
+
 
         <br>
         <div class="row">
-            <div class="col-lg-12 text-right">
-                <button *ngIf="edit ==0" mat-raised-button color="primary" [disabled]="!forma.valid" (click)="agregarPaciente()">Agregar</button>
-                <a class="btn btn-light btn-sm" *ngIf="edit ==1" (click)="editarLlamada(this.idCall)"><i class="fa fa-save"></i>
-                        Guardar</a>
+            <div class="col-6 text-left">
+                <button mat-raised-button color="warn" [routerLink]="['/registros']">Regresar</button>
+            </div>
+            <div class="col-lg-6 text-right">
+                <button mat-raised-button color="primary" [disabled]="!forma.valid" (click)="agregarPaciente()">{{textButton}}</button>
+
             </div>
 
         </div>
     </form>
 
     <hr>
-    <div class="p-2" *ngIf="idtipousuario!=5 && idtipousuario !=4 ">
-        <div class="text-center"><label style="color:midnightblue;">PACIENTES REGISTRADOS </label> </div>
-        <div class="col mb-2 text-right">
-            Registros por página
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="limit" (ngModelChange)="paginado()">
-                <label ngbButtonLabel class="btn-secondary btn-xs"> <input ngbButton type="radio" [value]="10">
-                    10 </label>
-                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="20">
-                    20</label>
-                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="30">
-                    30</label>
-            </div>
-        </div>
-        <div class="table">
 
-            <div class="table-responsive">
-                <table datatable="ng" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
-                    <thead class="text-center">
-                        <tr>
-                            <th>ID</th>
-                            <th>FECHA INGRESO</th>
-                            <th>CÓDIGO</th>
-                            <th>NOMBRE</th>
-                            <th>CURP</th>
-                            <th>EDAD</th>
-                            <th> <i class="fa fa-cog"></i> </th>
-
-
-                        </tr>
-                        <tr style="background-color: white;">
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[0].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="number" placeholder="Filtrar por ID">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[1].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="date" placeholder="Fecha Ingreso">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[2].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Código">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[3].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Nombre">
-                            </th>
-                            <th style=" border-right: inset 0pt">
-                                <input [(ngModel)]="filtros[4].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Curp">
-                            </th>
-
-                            <th>
-                                <input [(ngModel)]="filtros[5].param" autocomplete="off" (ngModelChange)="filtro.next()" class="redondeado" type="text" placeholder="Curp">
-                                <!-- <select [(ngModel)]="filtros[5].param" (ngModelChange)="filtro.next()" class="form-control">
-                                <option value="F">F</option>
-                                <option value="M">M</option>
-                                </select> -->
-                            </th>
-
-
-                            <th></th>
-
-
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        <tr *ngFor="let r of registros">
-                            <td>{{r.idpaciente}}</td>
-                            <td>{{r.fecha_ingreso}}</td>
-                            <td>{{r.codigo}}</td>
-                            <td>{{r.nombre}}</td>
-                            <td>{{r.curp}}</td>
-                            <td>{{r.edad}}</td>
-
-
-                            <!-- <td>{{r.nombre_usuario}}</td> -->
-                            <td>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <a class="btn btn-light btn-sm" ngbTooltip="Editar" (click)="obtenerPaciente(r.idpaciente)"><i class="fa fa-edit"></i></a>
-                                    </div>
-                                    <div class="col-lg-6"><a class="btn btn-danger btn-sm" ngbTooltip="Eliminar" (click)="eliminarLlamada(r.idpaciente)"><i
-                                            class="fa fa-trash-alt"></i></a></div>
-                                </div>
-
-                            </td>
-
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col left">
-                <ngb-pagination [collectionSize]="total" [maxSize]="5" [pageSize]="limit" [(page)]="page" [directionLinks]="true" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="paginado()">
-                </ngb-pagination>
-            </div>
-            <div class="col text-right ">
-                Total de registros: {{total}}
-            </div>
-        </div>
-    </div>
 
 
 

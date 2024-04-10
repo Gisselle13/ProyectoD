@@ -15,8 +15,8 @@ export class RegistrosService {
   constructor(private http: HttpClient) { }
 
 
-  agregarPaciente(form: FormData, idllamada: number, encuesta: number) {
-    const url = URL_WS + `/Registros/agregar_paciente/${idllamada}/${encuesta}`;
+  agregarPaciente(form: FormData, idllamada: number) {
+    const url = URL_WS + `/Registros/agregar_paciente/${idllamada}`;
     const formData: FormData = new FormData();
     let i = 1;
     formData.append('form', JSON.stringify(form));
@@ -24,8 +24,16 @@ export class RegistrosService {
       .pipe(map((resp: AgregarData) => resp));
   }
 
-  paginadoLlamadas(limit: number, page: number, filtros, order, encuesta:number) {
-    const url = URL_WS +  `/Registros/pagllamadas/${encuesta}`;
+  paginadoPacientes(limit: number, page: number, filtros, order) {
+    const url = URL_WS +  `/Registros/pagpacientes`;
+    return this.http.post(url, { limit, offset: (page - 1) * limit, filtros, order }).pipe(
+      map((resp: any) => {
+        return resp;
+      })
+    );
+  }
+  paginadoReportes(limit: number, page: number, filtros, order) {
+    const url = URL_WS + `/Registros/pagreportes`;
     return this.http.post(url, { limit, offset: (page - 1) * limit, filtros, order }).pipe(
       map((resp: any) => {
         return resp;
@@ -33,9 +41,9 @@ export class RegistrosService {
     );
   }
 
-  eliminarLlamada(idllamada: number) {
-    const url = URL_WS + '/Registros/eliminar_llamada';
-    return this.http.post<any>(url, idllamada)
+  eliminarPaciente(idpaciente: number) {
+    const url = URL_WS + '/Registros/eliminar_paciente';
+    return this.http.post<any>(url, idpaciente)
       .pipe(map((resp: any) => resp));
   }
 

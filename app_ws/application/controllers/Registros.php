@@ -83,19 +83,25 @@ class Registros extends REST_Controller
         $this->response($respuesta, $respuesta['status']);
     }
 
-    public function pagllamadas_post()
+    public function pagpacientes_post()
     {
         $this->load->model('registros_model');
-        $respuesta = $this->registros_model->paginadoLlamadas($this->post());
+        $respuesta = $this->registros_model->paginadoPacientes($this->post());
+        $this->response($respuesta["respuesta"], $respuesta["status"]);
+    }
+    public function pagreportes_post()
+    {
+        $this->load->model('registros_model');
+        $respuesta = $this->registros_model->paginadoReportes($this->post());
         $this->response($respuesta["respuesta"], $respuesta["status"]);
     }
 
 
 
-    public function eliminar_llamada_post()
+    public function eliminar_paciente_post()
     {
         $this->load->model('registros_model');
-        $respuesta = $this->registros_model->eliminarLlamada($this->post());
+        $respuesta = $this->registros_model->eliminarPaciente($this->post());
         $this->response($respuesta, $respuesta['status']);
     }
 

@@ -58,6 +58,7 @@
     }
 }
 
+// aqui se define el hover de los botones primarios
 .btn-primary,
 .btn-default,
 .btn-warning,
@@ -66,7 +67,7 @@
     color: $white;
     &:hover {
         color: $white;
-        background-color: #7E1F45;
+        background-color: #a1a1a1;
     }
 }
 
@@ -180,13 +181,13 @@
 
 .btn-primary {
     color: #fff;
-    background-color: #7e7e7e;
+    background-color: #3392ff;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active,
 .show>.btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #7E1F45;
-    border-color: #7E1F45;
+    background-color: #555555;
+    border-color: #555555;
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -43,12 +43,15 @@ export class RegistrosComponent implements OnInit {
     { value: 'FLORES TAMEZ DR. SIGIFREDO', viewValue: 'FLORES TAMEZ DR. SIGIFREDO' },
     { value: 'HERNANDEZ ZARAGOZA DRA. MIRIAM', viewValue: 'HERNANDEZ ZARAGOZA DRA. MIRIAM' },
   ]; medico: string;
-  constructor(private fb: FormBuilder, private activeRoutes: ActivatedRoute, private authService: AuthService, private registrosService: RegistrosService, private usuariosService: UsuariosService, private cdr: ChangeDetectorRef) {
+  constructor(private fb: FormBuilder, private activeRoutes: ActivatedRoute, private authService: AuthService, private registrosService: RegistrosService, private usuariosService: UsuariosService, private cdr: ChangeDetectorRef, private router: Router) {
 
     this.playLoad = this.authService.getPlayLoad();
     this.idtipousuario = this.playLoad.datos.tipo;
     this.idUsuarioActual = this.playLoad.datos.idusuario;
     this.idFiltro = this.playLoad.datos.idusuario;
+    this.idpaciente = this.activeRoutes.snapshot.params.id;
+
+
     console.log('idusser: ', this.idUsuarioActual);
      if(this.idtipousuario==1 ){
       this.idFiltro= ''
@@ -65,7 +68,7 @@ export class RegistrosComponent implements OnInit {
       this.textButton = 'Editar';
       this.idpaciente = this.idpaciente;
 
-      //-- this.cargarDatos();
+       this.obtenerPaciente(this.idpaciente);
 
     }
     else {
@@ -73,61 +76,61 @@ export class RegistrosComponent implements OnInit {
       this.textButton = 'Agregar';
     }
 
-    this.filtro.pipe(debounceTime(800)).subscribe(() => {
-        this.paginado();
-    });
+    // this.filtro.pipe(debounceTime(800)).subscribe(() => {
+    //     this.paginado();
+    // });
 
 
-    this.filtros = [
-      {
-        col: 'idpaciente',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'fecha_ingreso',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'codigo',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'nombre',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'curp',
-        param: '',
-        type: 'string',
-      },
-      {
-        col: 'edad',
-        param: '',
-        type: 'string',
-      },
+    // this.filtros = [
+    //   {
+    //     col: 'idpaciente',
+    //     param: '',
+    //     type: 'string',
+    //   },
+    //   {
+    //     col: 'fecha_ingreso',
+    //     param: '',
+    //     type: 'string',
+    //   },
+    //   {
+    //     col: 'codigo',
+    //     param: '',
+    //     type: 'string',
+    //   },
+    //   {
+    //     col: 'nombre',
+    //     param: '',
+    //     type: 'string',
+    //   },
+    //   {
+    //     col: 'curp',
+    //     param: '',
+    //     type: 'string',
+    //   },
+    //   {
+    //     col: 'edad',
+    //     param: '',
+    //     type: 'string',
+    //   },
 
 
     
-      //Filtrando los registros Individuales
-      // {
-      //   col: 'idusuario',
-      //   param: this.idFiltro,
-      //   type: 'string',
-      // }
-    ];
+    //   //Filtrando los registros Individuales
+    //   // {
+    //   //   col: 'idusuario',
+    //   //   param: this.idFiltro,
+    //   //   type: 'string',
+    //   // }
+    // ];
 
-    this.order = [
-      {
-        orderBy: 'fecha_ingreso',
-        direction: 'desc'
-      }
-    ];
+    // this.order = [
+    //   {
+    //     orderBy: 'fecha_ingreso',
+    //     direction: 'desc'
+    //   }
+    // ];
 
-     this.paginado();
+    //  this.paginado();
 
 
 //this.obtenerLlamadasAll();
@@ -201,6 +204,19 @@ export class RegistrosComponent implements OnInit {
       tel_oficina: [''],
       celular: [''],
       correo: [''],
+      alergico_medicamento: [''],
+      realizado_endodoncias: [''],
+      diabetico: [''],
+      padece_corazon: [''],
+      padece_presion_baja: [''],
+      padece_presion_alta: [''],
+      padece_riñon: [''],
+      otra_enfermedad: [''],
+      tomando_medicamento: [''],
+      sangran_encias: [''],
+      dolor_piezas: [''],
+      color: [''],
+      notas: [''],
     },
       {
         updateOn: 'change'
@@ -214,13 +230,16 @@ export class RegistrosComponent implements OnInit {
 
   agregarPaciente() {
 
-    let text = 'Llamada Agregada'
+    let text = 'Realizado'
+    if (this.idpaciente == 0) { text = 'Paciente Agregado' }else{
+    text = 'Paciente Editado'
+    }
     this.forma.value.idusuario = this.idUsuarioActual;
 
     if (this.forma.value.medico_titular==undefined){
       this.forma.value.medico_titular = ' ';
     }
-    this.registrosService.agregarPaciente(this.forma.value, this.idpaciente, this.encuesta)
+    this.registrosService.agregarPaciente(this.forma.value, this.idpaciente)
       .subscribe(resp => {
         Swal.fire({
           title: 'Éxito',
@@ -233,8 +252,8 @@ export class RegistrosComponent implements OnInit {
         })
           .then(resp => {
             console.log('form: ', this.forma.value);
-            window.location.reload();
-            //-- this.router.navigateByUrl('/atencion');
+          //  window.location.reload();
+            this.router.navigateByUrl('/registros');
           });
       }, err => {
         Swal.fire({
@@ -257,7 +276,7 @@ export class RegistrosComponent implements OnInit {
 
 
          console.log('pag:', this.encuesta);
-         this.registrosService.paginadoLlamadas(this.limit, this.page, this.filtros, this.order, this.encuesta)
+         this.registrosService.paginadoPacientes(this.limit, this.page, this.filtros, this.order)
            .subscribe(
              (data) => {
                this.registros = data.registros;
@@ -287,49 +306,7 @@ export class RegistrosComponent implements OnInit {
 
 
 
-  eliminarLlamada(id: number) {
-    //  this.varaux = 1;
-    this.idCall = id;
-    // console.log('v-', this.varaux);
-    console.log('id idCall:', this.idCall);
-
-
-    const text = `¿Seguro que desea eliminar?`;
-    Swal.fire({
-      title: 'Eliminar Llamada',
-      text,
-      icon: 'warning',
-      confirmButtonText: 'Sí',
-      showCancelButton: true,
-      cancelButtonText: 'No',
-      cancelButtonColor: '#EF5350',
-      reverseButtons: true
-    })
-      .then(resp => {
-        if (resp.isConfirmed) {
-          this.eliminar(id);
-        }
-      });
-
-
-  }
-
-  eliminar(id) {
-
-    this.registrosService.eliminarLlamada(id).subscribe(
-        data => {
-        //  this.buildForm();
-        //  this.ObtenerHijos();
-        location.reload();
-          const toast = this.swalToastOpen();
-          toast.fire();
-        },
-        err => {
-          this.errMsj = err.error.mensaje;
-          console.log(err);
-        }
-      );
-    }
+  
 
   swalToastOpen(): typeof Swal {
     const toast = Swal.mixin({
@@ -350,12 +327,8 @@ export class RegistrosComponent implements OnInit {
 
 
   obtenerPaciente(id: number) {
-
-
-    this.idCall = id;
-
-
-      this.registrosService.obtener_info(this.idCall)
+    this.id = this.idpaciente;
+      this.registrosService.obtener_info(this.id)
         .subscribe(
           data => {
             this.forma.patchValue(data.registro);
@@ -396,7 +369,7 @@ export class RegistrosComponent implements OnInit {
         })
   
 
-    this.edit = 0;
+    //this.edit = 0;
   }
 
 

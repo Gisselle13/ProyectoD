@@ -102,6 +102,19 @@ class Registros_model extends CI_Model
             'tel_oficina' => $datos['tel_oficina'],
             'celular' => $datos['celular'],
             'correo' => $datos['correo'],
+            'alergico_medicamento' => $datos['alergico_medicamento'],
+            'realizado_endodoncias' => $datos['realizado_endodoncias'],
+            'diabetico' => $datos['diabetico'],
+            'padece_corazon' => $datos['padece_corazon'],
+            'padece_presion_baja' => $datos['padece_presion_baja'],
+            'padece_presion_alta' => $datos['padece_presion_alta'],
+            'padece_riñon' => $datos['padece_riñon'],
+            'otra_enfermedad' => $datos['otra_enfermedad'],
+            'tomando_medicamento' => $datos['tomando_medicamento'],
+            'sangran_encias' => $datos['sangran_encias'],
+            'dolor_piezas' => $datos['dolor_piezas'],
+            'color' => $datos['color'],
+            'notas' => $datos['notas'],
             'idpaciente' =>  $idpaciente
         );
 
@@ -115,7 +128,7 @@ class Registros_model extends CI_Model
 
         if ($idpaciente > 0) {
             $this->db->where('idpaciente', $idpaciente);
-            $this->db->update('$pacientes', $data);
+            $this->db->update('pacientes', $data);
         }else{
          $this->db->insert('pacientes', $data);
         }
@@ -139,39 +152,42 @@ class Registros_model extends CI_Model
 
 
     ///Paginado
-    public function paginadoLlamadas($datos)
+    public function paginadoPacientes($datos)
     {
-
-        $encuesta = $this->uri->segment(3);
         $tabla='pacientes';
-        // if($encuesta==1){
-        //     $tabla = 'encuesta_1';
-        // }
-        // if ($encuesta == 2) {
-        //     $tabla = 'encuesta_2';
-        // }
         $this->load->library('paginado');
         $paginado = $this->paginado->paginar($datos, $tabla);
-
         $respuesta = array(
             'respuesta' =>  $paginado,
             'status' => REST_Controller::HTTP_OK
         );
+        return $respuesta;
+    }
 
+    ///Paginado
+    public function paginadoReportes($datos)
+    {
+        $tabla = 'pacientes';
+        $this->load->library('paginado');
+        $paginado = $this->paginado->paginar($datos, $tabla);
+        $respuesta = array(
+            'respuesta' =>  $paginado,
+            'status' => REST_Controller::HTTP_OK
+        );
         return $respuesta;
     }
 
 
 
-    public function eliminarLlamada($data)
+    public function eliminarPaciente($data)
     {
-        $idllamada = $data['0'];
+        $idpaciente = $data['0'];
         $this->db->trans_begin();
-        $where =  array('idllamada' => $idllamada);
-        $query = $this->db->select("*")->get_where('registro_llamadas', $where);
+        $where =  array('idpaciente' => $idpaciente);
+        $query = $this->db->select("*")->get_where('pacientes', $where);
 
         if ($query && $query->num_rows() >= 1) {
-            $this->db->delete('registro_llamadas', array('idllamada' => $idllamada));
+            $this->db->delete('pacientes', array('idpaciente' => $idpaciente));
             if ($this->db->trans_status() === false) {
                 $this->db->trans_rollback();
                 $respuesta = array(
