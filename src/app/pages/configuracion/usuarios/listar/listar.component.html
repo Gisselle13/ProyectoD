@@ -3,7 +3,7 @@
         <div class="card card-body animated fadeInUp">
             <div class="row">
                 <div class="col-lg-6">
-                    <a class="btn mt-4 btn-primary text-white" [routerLink]="['agregar']"> <i class="fa fa-plus"></i>Agregar usuario
+                    <a class="btn mt-4 btn-primary text-white" [routerLink]="['agregar']"> <img src="/assets/images/add.png" style="width: 20px;" /> Agregar Cuenta
                     </a>
 
                 </div>
@@ -25,25 +25,16 @@
                 </div> -->
                 <div class="table-responsive">
                     <table datatable="ng" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
-                        <thead class="">
-                            <tr>
+                        <thead class="text-center">
+                            <tr style="color: rgb(0, 121, 219); font-size: large;">
                                 <th>
-                                    <button class="fa fa-sort-amount-up" (click)="changeOrder(varaux='idusuario','asc')">
-                                    </button>
-                                    <button class="fa fa-sort-amount-down" (click)="changeOrder(varaux='idusuario','desc')">
-                                    </button> #
+                                    ID
                                 </th>
                                 <th>
-                                    <button class="fa fa-sort-amount-up" (click)="changeOrder(varaux='nombre','asc')">
-                                    </button>
-                                    <button class="fa fa-sort-amount-down" (click)="changeOrder(varaux='nombre','desc')">
-                                    </button> Nombre
+                                    Nombre
                                 </th>
                                 <th>
-                                    <button class="fa fa-sort-amount-up" (click)="changeOrder(varaux='correo','asc')">
-                                    </button>
-                                    <button class="fa fa-sort-amount-down" (click)="changeOrder(varaux='correo','desc')">
-                                    </button> Correo
+                                    Correo
                                 </th>
                                 <th class="text-center">Tipo</th>
                                 <th class="text-center">Cuenta</th>
@@ -72,7 +63,7 @@
                                         <option value="0">DESHABILITADOS</option>
                                     </select>
                                 </th>
-                                <th></th>
+
                             </tr>
                         </thead>
                         <tbody class="text-center">
@@ -108,8 +99,8 @@
                         <ngb-pagination [collectionSize]="total" [maxSize]="5" [pageSize]="limit" [(page)]="page" [directionLinks]="true" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="paginado()">
                         </ngb-pagination>
                     </div>
-                    <div class="col text-right ">
-                        Total de registros: {{total}}
+                    <div class="col text-right " style="color: royalblue;">
+                        <b>TOTAL CUENTAS: {{total}}</b>
                     </div>
                 </div>
 

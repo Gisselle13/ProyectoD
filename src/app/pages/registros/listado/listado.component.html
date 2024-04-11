@@ -11,14 +11,14 @@
             <h2 style="color: rgb(0, 204, 255);">PACIENTES REGISTRADOS </h2>
         </div>
 
-        <div class="col mb-2 text-right">
+        <div class="col mb-2 text-right" style="color:lightskyblue;">
             Registros por página
             <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="limit" (ngModelChange)="paginado()">
-                <label ngbButtonLabel class="btn-secondary btn-xs"> <input ngbButton type="radio" [value]="10">
+                <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"> <input ngbButton type="radio" [value]="10">
                         10 </label>
-                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="20">
+                <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="20">
                         20</label>
-                <label ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="30">
+                <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio" [value]="30">
                         30</label>
             </div>
         </div>
@@ -26,7 +26,7 @@
 
             <div class="table-responsive">
                 <table datatable="ng" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
-                    <thead class="text-center">
+                    <thead class="text-center" style="color: rgb(0, 121, 219); font-size: large;">
                         <tr>
                             <th>ID</th>
                             <th>FECHA INGRESO</th>
@@ -84,10 +84,9 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <!-- <a class="btn btn-light btn-sm" ngbTooltip="Editar" (click)="obtenerPaciente(r.idpaciente)"><i class="fa fa-edit"></i></a> -->
-                                        <a class="btn btn-warning btn-sm" style="border-radius: 8px;" ngbTooltip="Editar" [routerLink]="['editar', r.idpaciente]"><i
-                                                class="fa fa-edit"></i></a>
+                                        <a class="btn btn-secondary btn-sm" style="border-radius: 8px;" ngbTooltip="Editar Paciente" [routerLink]="['editar', r.idpaciente]"><img src="/assets/images/editar.png" style="width: 20px;" /></a>
                                     </div>
-                                    <div class="col-lg-6"><a style="border-radius: 8px;" class="btn btn-danger btn-sm" ngbTooltip="Eliminar" (click)="eliminarPaciente(r.idpaciente)"><i class="fa fa-trash-alt"></i></a>
+                                    <div class="col-lg-6"><a style="border-radius: 8px;" class="btn btn-danger btn-sm" ngbTooltip="Eliminar Paciente" (click)="eliminarPaciente(r.idpaciente)"><i class="fa fa-trash-alt"></i></a>
                                     </div>
                                 </div>
 
@@ -103,8 +102,8 @@
                 <ngb-pagination [collectionSize]="total" [maxSize]="5" [pageSize]="limit" [(page)]="page" [directionLinks]="true" [rotate]="true" [ellipses]="false" [boundaryLinks]="true" (pageChange)="paginado()">
                 </ngb-pagination>
             </div>
-            <div class="col text-right ">
-                Total de registros: {{total}}
+            <div class="col text-right" style="color: royalblue;">
+                <label class="border p-2">TOTAL REGISTROS: {{total}}</label>
             </div>
         </div>
     </div>

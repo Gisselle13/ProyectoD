@@ -160,4 +160,16 @@ class Registros extends REST_Controller
     {
         $this->response($this->registros_model->obtenerLlamadasAll(), REST_Controller::HTTP_OK);
     }
+
+    public function nombres_pacientes_get()
+    {
+        $respuesta = $this->registros_model->obtenerNombresPacientes();
+        $this->response($respuesta["respuesta"], $respuesta["status"]);
+    }
+
+    public function existe_user_post()
+    {
+        $respuesta = $this->registros_model->existe_user($this->post());
+        $this->response($respuesta["respuesta"], $respuesta["status"]);
+    }
 }

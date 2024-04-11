@@ -27,6 +27,22 @@ export class Validations
         };
     }
 
+    static existeUserValidator(registrosServive: RegistrosService) {
+        return (control: AbstractControl): Observable<ValidationErrors> => {
+            return timer(800).pipe(
+                switchMap(() => {
+                    if (!control.value) {
+                        return of(null);
+                    }
+                    const idpaciente = control.parent.get('idpaciente').value;
+                    return registrosServive.existe_user(control.value, idpaciente).pipe(
+                        map(resultado => (resultado ? { userDuplicado: true } : null))
+                    );
+                })
+            );
+        };
+    }
+
     static existeTelValidator(registrosService: RegistrosService) {
         return (control: AbstractControl): Observable<ValidationErrors> => {
             return timer(800).pipe(

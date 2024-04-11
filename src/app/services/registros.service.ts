@@ -96,11 +96,16 @@ export class RegistrosService {
   }
 
 
-  existe_user(telefono: string, idllamada) {
-    const url = URL_WS + '/Registros/existe_tel';
-    return this.http.post<ExisteUser>(url, { telefono, idllamada });
-  }
+  // existe_user(telefono: string, idllamada) {
+  //   const url = URL_WS + '/Registros/existe_tel';
+  //   return this.http.post<ExisteUser>(url, { telefono, idllamada });
+  // }
 
+
+  existe_user(nombre: string, idpaciente) {
+    const url = URL_WS + '/Registros/existe_user';
+    return this.http.post<ExisteUser>(url, { nombre, idpaciente });
+  }
 
   obtenerCargo() {
     const url = URL_WS + '/Registros/cargo';
@@ -121,5 +126,13 @@ export class RegistrosService {
           return l;
         })
       )
+  }
+
+  obtenerNombresPacientes() {
+    const url = URL_WS + '/Registros/nombres_pacientes';
+    return this.http.get<any>(url)
+      .pipe(map((n) => {
+        return n;
+      }));
   }
 }

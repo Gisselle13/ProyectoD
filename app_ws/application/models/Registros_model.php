@@ -426,6 +426,33 @@ class Registros_model extends CI_Model
 
         return $respuesta;
     }
+
+    public function obtenerNombresPacientes()
+    {
+        $this->db->select('idpaciente,nombre')->from('pacientes');
+        $sector = $this->db->get()->result_array();
+        $respuesta = array(
+            'respuesta' => $sector,
+            'status' => REST_Controller::HTTP_OK
+        );
+        return $respuesta;
+    }
+
+
+    public function existe_user($data)
+    {
+        $nombre = $data["nombre"];
+        $idpaciente = $data["idpaciente"];
+        if ($idpaciente > 0) {
+            $this->db->where_not_in('idpaciente', [$idpaciente]);
+        }
+        $existe = (bool) $this->db->select('idpaciente')->from('pacientes')->where('nombre', $nombre)->count_all_results();
+        $respuesta = array(
+            'respuesta' => $existe,
+            'status' => REST_Controller::HTTP_ACCEPTED
+        );
+        return $respuesta;
+    }
 }
 
 

@@ -3,10 +3,11 @@
         <div id="loginform">
             <div class="logo p-1">
                 <!-- <span class="db"><img src="assets/images/inmujer-text.png" alt="logo" class="img-fluid" /></span> -->
-                <h4 class="font-medium m-b-20">Inicio de sesión</h4>
+                <h4 class="font-medium m-b-20" style="color:rgb(48, 190, 255);">Cuenta</h4>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 text-center">
+                    <img src="/assets/images/login.png" style="width: 50%;" />
                     <form [formGroup]="loginForm" class="form-horizontal m-t-20" (ngSubmit)="login()">
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
@@ -22,7 +23,7 @@
                         </div>
                         <div class="form-group text-center">
                             <div class="col-xs-12 p-b-20">
-                                <button [disabled]="loginForm.invalid" type="submit" class="btn btn-block btn-lg btn-info">Entrar</button>
+                                <button style="border-radius: 10px;" [disabled]="loginForm.invalid" type="submit" class="btn btn-block btn-lg btn-info"><img src="/assets/images/inicio.png" style="width: 10%;" /> Entrar</button>
                             </div>
                         </div>
                         <!-- <div class="text-center p-2">
@@ -31,7 +32,7 @@
                         <div *ngIf="error" class="alert alert-danger mt-2" role="alert">
                             <small>{{mensajeError}}</small>
                         </div>
-                        <p class="text-center"> DENTIS</p>
+                        <img src="assets/images/dentis.png" style="width: 75%;" alt="homepage" class="dark-logo" />
                     </form>
                 </div>
             </div>
@@ -43,7 +44,7 @@
     <div>
         <div class="auth-box2">
             <div class="logo">
-                <span class="db"><img src="https://nld.gob.mx/assets/img/logo.png" alt="logo" class="img-fluid" /></span>
+
                 <h3 class="">Registro</h3>
             </div>
             <hr>

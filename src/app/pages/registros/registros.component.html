@@ -13,7 +13,17 @@
                 <div class="col-lg-6">
                     <mat-form-field appearance="outline">
                         <mat-label>NOMBRE COMPLETO:</mat-label>
-                        <input matInput maxlength="200" formControlName="nombre" />
+                        <input matInput maxlength="200" formControlName="nombre" list="lista4" />
+
+                        <datalist type="text" id="lista4">
+                            <option *ngFor="let tipo of NombresPacientes" [value]="tipo.nombre">
+                                {{tipo.nombre}}
+                            </option>
+                        </datalist>
+                        <span *ngIf="nombreField.hasError('userDuplicado')">
+                            <label style="color: red;"> <i class="fa fa-exclamation-triangle"></i> Paciente Ya Registrado</label>
+                        </span>
+                        <mat-icon matSuffix>account_box</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-4">
@@ -86,7 +96,7 @@
             </div>
         </div>
         <div class="border-top p-1">
-            <label> Dirección</label>
+            <label style="color: royalblue;"> Dirección</label>
 
             <div class="row">
 
@@ -154,31 +164,35 @@
         </div>
 
         <div class="border-top p-1">
-            <label> Contacto</label>
+            <label style="color: royalblue;"> Contacto</label>
             <div class="row">
 
                 <div class="col-lg-3">
                     <mat-form-field appearance="outline">
                         <mat-label>Tel. Casa</mat-label>
-                        <input matInput maxlength="200" formControlName="tel_casa" />
+                        <input matInput placeholder="(999) 999 9999" mask="(000) 000 0000" maxlength="200" formControlName="tel_casa" />
+                        <mat-icon matSuffix>phone</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-3">
                     <mat-form-field appearance="outline">
                         <mat-label>Tel. Oficina</mat-label>
-                        <input matInput maxlength="200" formControlName="tel_oficina" />
+                        <input matInput placeholder="(999) 999 9999" mask="(000) 000 0000" maxlength="200" formControlName="tel_oficina" />
+                        <mat-icon matSuffix>phone</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-3">
                     <mat-form-field appearance="outline">
                         <mat-label>Celular</mat-label>
-                        <input matInput maxlength="200" formControlName="celular" />
+                        <input matInput placeholder="(999) 999 9999" mask="(000) 000 0000" maxlength="200" formControlName="celular" />
+                        <mat-icon matSuffix>settings_cell</mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-3">
                     <mat-form-field appearance="outline">
                         <mat-label>Correo</mat-label>
                         <input matInput maxlength="200" formControlName="correo" />
+                        <mat-icon matSuffix>alternate_email</mat-icon>
                     </mat-form-field>
                 </div>
 

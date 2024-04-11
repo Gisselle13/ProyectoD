@@ -43,6 +43,7 @@ export class RegistrosComponent implements OnInit {
     { value: 'FLORES TAMEZ DR. SIGIFREDO', viewValue: 'FLORES TAMEZ DR. SIGIFREDO' },
     { value: 'HERNANDEZ ZARAGOZA DRA. MIRIAM', viewValue: 'HERNANDEZ ZARAGOZA DRA. MIRIAM' },
   ]; medico: string;
+  NombresPacientes: any[] = new Array();
   constructor(private fb: FormBuilder, private activeRoutes: ActivatedRoute, private authService: AuthService, private registrosService: RegistrosService, private usuariosService: UsuariosService, private cdr: ChangeDetectorRef, private router: Router) {
 
     this.playLoad = this.authService.getPlayLoad();
@@ -57,6 +58,7 @@ export class RegistrosComponent implements OnInit {
       this.idFiltro= ''
       }
     this.buildForm();
+    this.obtenerNombresPacientes();
     // this.getUsuarios();
     this.idpaciente = this.activeRoutes.snapshot.params.id;
     if (this.idpaciente == undefined) {
@@ -155,7 +157,13 @@ export class RegistrosComponent implements OnInit {
      console.log('Número de teléfono aleatorio:', numeroAleatorio);
   }
 
-
+  obtenerNombresPacientes() {
+    this.registrosService.obtenerNombresPacientes().subscribe(
+      nombres => {
+        this.NombresPacientes = nombres
+      }
+    )
+  }
   generarNumeroTelefonoAleatorio(numerosEvitar: string[]): string {
     let numeroTelefono: string;
     do {
@@ -182,7 +190,7 @@ export class RegistrosComponent implements OnInit {
     this.forma = this.fb.group({
       idpaciente: this.idpaciente,
       fecha_ingreso: [''],
-      nombre: [''],
+      nombre: ['', [Validators.required], [Validations.existeUserValidator(this.registrosService)]],
       codigo: [''],
       curp: [''],
       sexo: [''],
@@ -408,5 +416,9 @@ export class RegistrosComponent implements OnInit {
           console.log(err.error);
         }
       )
+  }
+
+  get nombreField() {
+    return this.forma.get('nombre');
   }
 }
