@@ -38,16 +38,16 @@
     <app-root></app-root>
 </body>
 <script>
-    // function exportF(elem) {
-    //     var style = "<style>     .myBox thead th {font: 13px sans - serif;font-weight: 900;color: red;position: sticky;top: 0;left: 0; } </style>";
-    //     var table = document.getElementById("table");
-    //     var html = table.outerHTML;
-    //     var fecha = new Date();
-    //     var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
-    //     elem.setAttribute("href", url);
-    //     elem.setAttribute("download", "Reporte_Capacitacion_" + fecha.toLocaleDateString("es-MX") + ".xls"); // Choose the file name
-    //     return false;
-    // }
+    function exportF(elem) {
+        var style = "<style>     .myBox thead th {font: 13px sans - serif;font-weight: 900;color: red;position: sticky;top: 0;left: 0; } </style>";
+        var table = document.getElementById("table");
+        var html = table.outerHTML;
+        var fecha = new Date();
+        var url = 'data:application/vnd.ms-excel,' + escape(html); // Set your html table into url 
+        elem.setAttribute("href", url);
+        elem.setAttribute("download", "Reporte_" + fecha.toLocaleDateString("es-MX") + ".xls"); // Choose the file name
+        return false;
+    }
 
     function exportDiario(elem) {
         var style = "<style>     .myBox thead th {font: 13px sans - serif;font-weight: 900;color: red;position: sticky;top: 0;left: 0; } </style>";

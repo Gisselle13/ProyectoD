@@ -180,14 +180,14 @@ export class ReportesComponent implements OnInit {
     this.fechaFinal = this.forma.get('fechaFinal').value;
     this.filtros[1].param = this.fechaInicio;
     this.filtros[2].param = this.fechaFinal;
-    // console.log('fechaInicio:', this.fechaInicio); 
-    // console.log('fechaFinal:', this.fechaFinal); 
+     console.log('fechaInicio:', this.fechaInicio); 
+     console.log('fechaFinal:', this.fechaFinal); 
     this.registrosService.paginadoReportes(this.limit, this.page, this.filtros, this.order)
       .subscribe(
         (data) => {
           // console.log('data - cap-', data);
           this.limit = 5000;
-          let t = 0;
+          this.total = data.total;
           //  this.reportes = data.respuesta.registros;
           this.reportes = data.registros;
           for (let r in this.reportes) {

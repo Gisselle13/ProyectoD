@@ -1,0 +1,16 @@
+
+Ruta mysql:
+C:\xampp\mysql_start.bat
+
+apache:
+C:\xampp\apache_start.bat
+
+
+
+
+
+npm install -g @angular/cli@10.2.3
+
+ng version
+
+cd C:\xampp\htdocs\ProyectoD

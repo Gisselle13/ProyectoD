@@ -1,6 +1,0 @@
-
-Ruta mysql:
-C:\xampp\mysql_start.bat
-
-apache:
-C:\xampp\apache_start.bat

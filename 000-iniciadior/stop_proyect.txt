@@ -1,0 +1,3 @@
+cd C:\xampp\htdocs\ProyectoD
+
+taskkill /F /IM node.exe

@@ -18,7 +18,7 @@
                                 <i class="far fa-calendar-alt"></i>
                             </span>
                         </div>
-                        <input class="form-control" (ngModelChange)="this.paginado()" type="date" formControlName="fechaInicio" required>
+                        <input class="form-control" type="date" formControlName="fechaInicio" required>
                     </div>
                 </div>
                 <div class="col-lg-4 text-center">
@@ -29,7 +29,7 @@
                                 <i class="far fa-calendar-alt"></i>
                             </span>
                         </div>
-                        <input class="form-control" type="date" (ngModelChange)="this.paginado()" formControlName="fechaFinal" required>
+                        <input class="form-control" type="date" formControlName="fechaFinal" required>
                         <!-- (ngModelChange)="this.paginado()" -->
                     </div>
                 </div>
@@ -71,12 +71,29 @@
         </mat-tab>
 
     </mat-tab-group> -->
-
+    <!-- <div class="col mb-2 text-right" style="color:lightskyblue;">
+        Registros por página
+        <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="limit" (ngModelChange)="paginado()">
+            <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"> <input ngbButton type="radio"
+                [value]="10">
+            10 </label>
+            <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio"
+                [value]="20">
+            20</label>
+            <label style="color: blue;" ngbButtonLabel class="btn-secondary btn-xs"><input ngbButton type="radio"
+                [value]="30">
+            30</label>
+        </div>
+    </div> -->
+    <div class="col text-right" style="color: royalblue;">
+        <label class="border p-2">TOTAL REGISTROS: {{total}}</label>
+    </div>
 
     <div class="table">
-
+        <a class="btn btn-light" mat-flat-button id="downloadLink" onclick="exportF(this)">
+            <i class="fa fa-file-excel"></i> Exportar a Excel</a>
         <div class="table-responsive">
-            <table datatable="ng" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
+            <table datatable="ng" id="table" dt-options="dtOptions" dt-column-defs="DTColumnDefs" class="table table-striped table-bordered table-hover dataTables-example">
                 <thead class="text-center">
                     <tr>
                         <th>ID</th>
@@ -87,7 +104,7 @@
                         <th>SEXO</th>
                         <th>EDAD</th>
                         <th>FECHA NACIMIENTO</th>
-                        <th>MEDICO TITULAR</th>
+                        <th>TELÉFONO</th>
                     </tr>
                 </thead>
 
@@ -101,7 +118,7 @@
                         <td>{{r.sexo}}</td>
                         <td>{{r.edad}}</td>
                         <td>{{r.fecha_nacimiento}}</td>
-                        <td>{{r.medico_titular}}</td>
+                        <td>{{r.tel_casa}}</td>
                     </tr>
                 </tbody>
 
@@ -109,6 +126,8 @@
 
         </div>
     </div>
+
+
 
     <!-- <div #tablesContainer style="color: black;">
         <div class="text-center">
